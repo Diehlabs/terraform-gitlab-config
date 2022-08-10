@@ -45,7 +45,7 @@ module "gitlab_groups" {
   name              = each.value.name
   description       = each.value.description
   share_groups      = lookup(each.value, "share_groups", {})
-  parent_group_name = var.defaults.group_path
+  parent_group_name = try(each.value.parent_group_name, var.defaults.group_path)
 }
 
 # -----------------------------------------------------------------------------
@@ -70,6 +70,7 @@ module "gitlab_projects" {
   external_wiki_url                              = try(each.value.external_wiki_url, null)
   environments                                   = try(each.value.environments, {})
   pipeline_schedules                             = try(each.value.pipeline_schedules, {})
+  pipelines_enabled                              = try(each.value.pipelines_enabled, true)
   push_rules = merge(
     local.push_rules_default,
     lookup(var.defaults, "push_rules", {})

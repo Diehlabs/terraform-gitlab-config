@@ -25,5 +25,5 @@ output "runners_token" {
 
 output "group_obj" {
   description = "The entire group object that was created."
-  value = gitlab_group.group
+  value       = gitlab_group.group
 }

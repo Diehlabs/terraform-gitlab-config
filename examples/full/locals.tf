@@ -1,14 +1,14 @@
 locals {
   defaults = {
     # group_path will be used as the namespace for all groups and Terratestects unless one is specified a given resource.
-    group_path = "verituity/verituity-platform"
+    group_path = "verituity/gitlab-management/gitlab-terratest-sandbox"
 
     # push_rules will be used for all Terratestects unless one is specified for a given Terratestect.
     push_rules = {
-      branch_name_regex = "^(master|feature|hotfix|bugfix|release)\\/"
+      branch_name_regex = "^(main|feature|hotfix|bugfix|release)\\/"
     }
     # allow overriding number of approvers per merge request
-    disable_overriding_approvers_per_mr = true
+    disable_overriding_approvers_per_mr = false
   }
 
   projects = {

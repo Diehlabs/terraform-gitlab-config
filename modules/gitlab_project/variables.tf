@@ -40,8 +40,8 @@ variable "share_groups" {
 }
 
 variable "merge_pipelines_enabled" {
-  type        = bool
   description = "Enable pipelines for merge/pull requests."
+  type        = bool
   default     = true
 }
 
@@ -73,6 +73,7 @@ variable "project_variables" {
 
 variable "init_with_readme" {
   description = "Whether or not to initialize reop with a generic readme. May conflict with push rules."
+  type        = bool
   default     = false
 }
 
@@ -102,25 +103,31 @@ variable "pipeline_schedules" {
 }
 
 variable "wiki_enabled" {
+  type    = bool
   default = false
 }
 variable "request_access_enabled" {
+  type    = bool
   default = false
 }
 variable "packages_enabled" {
+  type    = bool
   default = false
 }
 variable "container_registry_enabled" {
+  type    = bool
   default = false
 }
 
 variable "import_url" {
   description = "Git URL to a repository to be imported."
+  # Default must be a blank string, "null" causes errors.
   default     = ""
 }
 
 variable "mirror" {
   description = "Enable project pull mirror."
+  type        = bool
   default     = false
 }
 
@@ -128,4 +135,10 @@ variable "external_wiki_url" {
   description = "Allows to manage the lifecycle of a project integration with External Wiki Service"
   type        = string
   default     = null
+}
+
+variable "pipelines_enabled" {
+  description = "Pipelines enabled on this project"
+  type        = bool
+  default     = true
 }

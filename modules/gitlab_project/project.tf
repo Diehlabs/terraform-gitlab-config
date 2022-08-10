@@ -22,7 +22,7 @@ resource "gitlab_project" "empty" {
   only_allow_merge_if_pipeline_succeeds = true
   remove_source_branch_after_merge      = true
   initialize_with_readme                = var.init_with_readme
-  pipelines_enabled                     = true
+  pipelines_enabled                     = var.pipelines_enabled
   issues_enabled                        = false
   lfs_enabled                           = false
   merge_pipelines_enabled               = var.merge_pipelines_enabled
