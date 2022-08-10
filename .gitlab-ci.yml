@@ -1,0 +1,48 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
+
+stages:
+  - lint
+  - test
+  - release
+
+image: registry.gitlab.com/verituity/devops/docker-images/go-build/terra:latest
+
+variables:
+  # these vars are used to complete the partial terraform http backend configuration, if there is one defined in the root module
+  # defaults may also be supplied in the cicd templates
+  TF_HTTP_USERNAME: "gitlab-ci-token"
+  TF_HTTP_PASSWORD: "$GITLAB_TOKEN"
+  # these vars must be incremented when the developer deems necessary
+  TF_CLI_VERSION: '1.2.6'
+  TF_MODULE_VERSION: '1.0.0'
+  TERRATEST_LOG_PARSER_VERSION: '0.40.17'
+  TERRATEST_TIMEOUT: '10m'
+
+include:
+  - project: 'verituity/devops/gitlab-ci-templates/cicd-templates'
+    file:
+      - /terraform/terraform.yml
+      - /util/git-tag.yml
+    ref: v0.1.6
+
+Terraform Validate:
+  stage: lint
+  extends: .terratest_validate
+
+Terratest:
+  stage: test
+  extends: .terratest
+  cache:
+    key: terraform-gitlab-project
+    paths:
+      - .go/pkg/mod
+
+Create Git tag:
+  stage: release
+  extends: .git_tag
+  variables:
+    GIT_TAG: "$TF_MODULE_VERSION"
+    GITLAB_API_TOKEN: "$GITLAB_TOKEN"
