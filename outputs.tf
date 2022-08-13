@@ -11,3 +11,12 @@ output "projects" {
     name => module.gitlab_projects[name].project_obj
   }
 }
+
+# output "all_projects" {
+#   description = "Debug data for locals object"
+#   value       = local.all_projects
+# }
+
+# output "group_data" {
+#   value = module.gitlab_groups
+# }

@@ -5,7 +5,7 @@
 resource "gitlab_project_environment" "all" {
   for_each            = var.environments
   project             = local.project.id
-  name                = each.key
-  external_url        = each.value
+  name                = each.value.name
+  external_url        = each.value.external_url
   stop_before_destroy = true
 }

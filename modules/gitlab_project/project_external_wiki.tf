@@ -1,9 +1,8 @@
-locals {
-  external_wiki_url = try(var.external_wiki_url, null) == null ? {} : { url = var.external_wiki_url }
-}
-
+# -----------------------------------------------------------------------------
+# Create the external wiki link if var.external_wiki_url is not null(default)
+# -----------------------------------------------------------------------------
 resource "gitlab_service_external_wiki" "wiki" {
-  for_each          = local.external_wiki_url
+  count             = var.external_wiki_url == null ? 0 : 1
   project           = local.project.id
-  external_wiki_url = each.value
+  external_wiki_url = var.external_wiki_url
 }

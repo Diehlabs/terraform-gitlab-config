@@ -77,12 +77,6 @@ variable "init_with_readme" {
   default     = false
 }
 
-variable "disable_overriding_approvers_per_merge_request" {
-  description = "Whether to allow overriding approvers per merge request"
-  type        = bool
-  default     = true
-}
-
 variable "create_init_file" {
   description = "Whether to create an initial file in the repo so that main branch exists"
   type        = bool
@@ -122,7 +116,7 @@ variable "container_registry_enabled" {
 variable "import_url" {
   description = "Git URL to a repository to be imported."
   # Default must be a blank string, "null" causes errors.
-  default     = ""
+  default = ""
 }
 
 variable "mirror" {
@@ -141,4 +135,50 @@ variable "pipelines_enabled" {
   description = "Pipelines enabled on this project"
   type        = bool
   default     = true
+}
+
+variable "lfs_enabled" {
+  description = "Git large filesystem enabled"
+  type        = bool
+  default     = false
+}
+
+variable "issues_enabled" {
+  description = "Issues enabled"
+  type        = bool
+  default     = false
+}
+
+variable "remove_source_branch_after_merge" {
+  description = "Remove the source branch after completed merge"
+  type        = bool
+  default     = true
+}
+
+variable "only_allow_merge_if_pipeline_succeeds" {
+  description = "Only allow merge if merge pipeline succeeds"
+  type        = bool
+  default     = true
+}
+
+variable "shared_runners_enabled" {
+  description = "Allow pipelines to run on shared runners"
+  type        = bool
+  default     = true
+}
+
+variable "merge_request_approval_settings" {
+  description = "Settings for merge request approvals on the project"
+  type = object({
+    reset_approvals_on_push                        = bool
+    disable_overriding_approvers_per_merge_request = bool
+    merge_requests_author_approval                 = bool
+    merge_requests_disable_committers_approval     = bool
+  })
+}
+
+variable "public_builds" {
+  description = "If true, jobs can be viewed by non-project members."
+  type        = bool
+  default     = false
 }
