@@ -15,3 +15,8 @@ output "projects" {
   #   name => module.gitlab_config[name].projects
   # }
 }
+
+# output "all_projects" {
+#   description = "Debug output for local object"
+#   value       = module.gitlab_config.all_projects
+# }

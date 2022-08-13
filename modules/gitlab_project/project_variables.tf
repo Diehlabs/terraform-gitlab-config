@@ -3,8 +3,8 @@
 # -----------------------------------------------------------------------------
 resource "gitlab_project_variable" "all" {
   for_each          = var.project_variables
-  project           = gitlab_project.empty[0].id
-  key               = each.key
+  project           = local.project.id
+  key               = each.value.name
   value             = each.value.value
   protected         = lookup(each.value, "protected", false)
   masked            = lookup(each.value, "masked", true)
