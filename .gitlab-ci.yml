@@ -23,14 +23,14 @@ variables:
   TF_CLI_VERSION: '1.2.7'
   TERRATEST_LOG_PARSER_VERSION: '0.40.17'
   TERRATEST_TIMEOUT: '15m'
-  TF_MODULE_VERSION: '0.1.0'
+  TF_MODULE_VERSION: '0.1.1'
 
 include:
-  - project: 'verituity/gitlab-management/cicd-templates'
+  - project: 'verituity/devops/cicd-templates'
     file:
       - /terraform/terraform.yml
       - /util/git-tag.yml
-    ref: feature/0.1.9/terratest-updates
+    ref: v0.2.2
 
 Terraform Validate:
   stage: lint
