@@ -182,3 +182,9 @@ variable "public_builds" {
   type        = bool
   default     = false
 }
+
+variable "merge_trains_enabled" {
+  description = "Enable or disabled merge trains."
+  type        = bool
+  default     = false
+}

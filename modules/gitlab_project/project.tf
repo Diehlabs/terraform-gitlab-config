@@ -11,7 +11,11 @@ locals {
 # Create the project (repo).
 # -----------------------------------------------------------------------------
 resource "gitlab_project" "empty" {
-  count                                 = var.template_project_path == null ? 1 : 0
+  count = var.template_project_path == null ? 1 : 0
+  # exclusive to non-templated projects
+  import_url = var.import_url
+  mirror     = var.mirror
+  # identical to templated
   name                                  = var.name
   description                           = var.description
   namespace_id                          = data.gitlab_group.parent_group.id
@@ -25,13 +29,14 @@ resource "gitlab_project" "empty" {
   pipelines_enabled                     = var.pipelines_enabled
   issues_enabled                        = var.issues_enabled
   lfs_enabled                           = var.lfs_enabled
-  merge_pipelines_enabled               = var.merge_pipelines_enabled
+  merge_pipelines_enabled               = var.merge_trains_enabled ? true : var.merge_pipelines_enabled
+  merge_trains_enabled                  = var.merge_trains_enabled
   wiki_enabled                          = var.wiki_enabled
+  wiki_access_level                     = var.wiki_enabled ? "private" : "disabled"
   request_access_enabled                = var.request_access_enabled
   packages_enabled                      = var.packages_enabled
   container_registry_enabled            = var.container_registry_enabled
-  import_url                            = var.import_url
-  mirror                                = var.mirror
+  container_registry_access_level       = var.container_registry_enabled ? "private" : "disabled"
   public_builds                         = var.public_builds
   push_rules {
     branch_name_regex      = lookup(var.push_rules, "branch_name_regex", "")
@@ -49,28 +54,33 @@ resource "gitlab_project" "empty" {
 #   if you're not using a template project.
 # -----------------------------------------------------------------------------
 resource "gitlab_project" "from_template" {
-  count                                 = var.template_project_path == null ? 0 : 1
+  count = var.template_project_path == null ? 0 : 1
+  # specifics for templated project
+  template_name                   = data.gitlab_project.template_project[0].id
+  group_with_project_templates_id = data.gitlab_project.template_project[0].namespace_id
+  # identical to non-templated
   name                                  = var.name
   description                           = var.description
   namespace_id                          = data.gitlab_group.parent_group.id
   visibility_level                      = var.visibility_level
   default_branch                        = var.default_branch
   merge_method                          = var.merge_method
+  shared_runners_enabled                = var.shared_runners_enabled
+  only_allow_merge_if_pipeline_succeeds = var.only_allow_merge_if_pipeline_succeeds
+  remove_source_branch_after_merge      = var.remove_source_branch_after_merge
   initialize_with_readme                = var.init_with_readme
-  template_name                         = data.gitlab_project.template_project[0].id
-  group_with_project_templates_id       = data.gitlab_project.template_project[0].namespace_id
-  use_custom_template                   = true
-  shared_runners_enabled                = true
-  only_allow_merge_if_pipeline_succeeds = true
-  remove_source_branch_after_merge      = true
-  pipelines_enabled                     = true
-  issues_enabled                        = false
-  lfs_enabled                           = false
-  merge_pipelines_enabled               = var.merge_pipelines_enabled
+  pipelines_enabled                     = var.pipelines_enabled
+  issues_enabled                        = var.issues_enabled
+  lfs_enabled                           = var.lfs_enabled
+  merge_pipelines_enabled               = var.merge_trains_enabled ? true : var.merge_pipelines_enabled
+  merge_trains_enabled                  = var.merge_trains_enabled
   wiki_enabled                          = var.wiki_enabled
-  request_access_enabled                = false
-  packages_enabled                      = false
-  container_registry_enabled            = false
+  wiki_access_level                     = var.wiki_enabled ? "private" : "disabled"
+  request_access_enabled                = var.request_access_enabled
+  packages_enabled                      = var.packages_enabled
+  container_registry_enabled            = var.container_registry_enabled
+  container_registry_access_level       = var.container_registry_enabled ? "private" : "disabled"
+  public_builds                         = var.public_builds
   push_rules {
     branch_name_regex      = lookup(var.push_rules, "branch_name_regex", "")
     commit_message_regex   = lookup(var.push_rules, "commit_message_regex", "")
@@ -83,16 +93,9 @@ resource "gitlab_project" "from_template" {
 # -----------------------------------------------------------------------------
 # Create CI badge for the project
 # -----------------------------------------------------------------------------
-# locals {
-#   badge_project_id = try(
-#       gitlab_project.empty[0].id,
-#       gitlab_project.from_template[0].id,
-#   )
-
-# }
-# resource "gitlab_project_badge" "project" {
-#   project   = local.badge_project_id
-#   link_url  = "https://gitlab.com/${gitlab_project.empty[0].path_with_namespace}/commits/${gitlab_project.empty[0].default_branch}"
-#   image_url = "https://gitlab.com/${gitlab_project.empty[0].path_with_namespace}/badges/${gitlab_project.empty[0].default_branch}/pipeline.svg"
-#   name      = "CI"
-# }
+resource "gitlab_project_badge" "project" {
+  project   = local.project.id
+  link_url  = "https://gitlab.com/${local.project.path_with_namespace}/commits/${local.project.default_branch}"
+  image_url = "https://gitlab.com/${local.project.path_with_namespace}/badges/${local.project.default_branch}/pipeline.svg"
+  name      = "CI"
+}
