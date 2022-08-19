@@ -116,7 +116,7 @@ module "gitlab_projects" {
   push_rules = merge(
     local.push_rules_default,
     try(var.defaults.project.push_rules, {}),
-    try(each.value.push_rules, {})
+    try(each.value.project.push_rules, {})
   )
 
   depends_on = [module.gitlab_groups]
