@@ -93,6 +93,7 @@ module "gitlab_projects" {
   packages_enabled                      = try(each.value.packages_enabled, false)
   mirror                                = try(each.value.mirror, false)
   init_with_readme                      = try(each.value.init_with_readme, false)
+  merge_trains_enabled                  = try(each.value.merge_trains_enabled, false)
   merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, true)
   request_access_enabled                = try(each.value.request_access_enabled, false)
   container_registry_enabled            = try(each.value.container_registry_enabled, false)
