@@ -61,10 +61,10 @@ output "project_obj" {
 output "create_deploy_token" {
   description = "A deploy token scoped to this project."
   sensitive   = true
-  value       = try(gitlab_deploy_token.default.token, null)
+  value       = try(gitlab_deploy_token.default[0].token, null)
 }
 
 output "create_deploy_token_username" {
   description = "The name token scoped to this project."
-  value       = try(gitlab_deploy_token.default.username, null)
+  value       = try(gitlab_deploy_token.default[0].username, null)
 }
