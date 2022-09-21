@@ -107,12 +107,9 @@ module "gitlab_projects" {
   remove_source_branch_after_merge      = try(each.value.remove_source_branch_after_merge, true)
   only_allow_merge_if_pipeline_succeeds = try(each.value.only_allow_merge_if_pipeline_succeeds, true)
   shared_runners_enabled                = try(each.value.shared_runners_enabled, true)
-
-  merge_request_approval_settings = merge(
-    local.project_level_mr_approvals_default,
-    try(var.defaults.project.merge_request_approval_settings, {}),
-    try(each.value.merge_request_approval_settings, {})
-  )
+  create_deploy_token                   = try(each.value.create_deploy_token, false)
+  deploy_token_scopes                   = try(each.value.shared_runners_enabled, ["read_repository", "read_registry", "read_package_registry"])
+  merge_request_approval_settings       = try(each.value.merge_request_approval_settings, {})
 
   push_rules = merge(
     local.push_rules_default,

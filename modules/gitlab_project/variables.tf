@@ -169,12 +169,13 @@ variable "shared_runners_enabled" {
 
 variable "merge_request_approval_settings" {
   description = "Settings for merge request approvals on the project"
-  type = object({
-    reset_approvals_on_push                        = bool
-    disable_overriding_approvers_per_merge_request = bool
-    merge_requests_author_approval                 = bool
-    merge_requests_disable_committers_approval     = bool
-  })
+  type        = map(any)
+  # type = object({
+  #   reset_approvals_on_push                        = bool
+  #   disable_overriding_approvers_per_merge_request = bool
+  #   merge_requests_author_approval                 = bool
+  #   merge_requests_disable_committers_approval     = bool
+  # })
 }
 
 variable "public_builds" {
@@ -187,4 +188,16 @@ variable "merge_trains_enabled" {
   description = "Enable or disabled merge trains."
   type        = bool
   default     = false
+}
+
+variable "create_deploy_token" {
+  description = "Will create a project scoped deploy token and stored it as PROJECT_DEPLOY_TOKEN as a CICD variable on the project."
+  type        = bool
+  default     = false
+}
+
+variable "deploy_token_scopes" {
+  description = "Defines the rights for the optional deploy token. Only evaluated if create_deploy_token is set to true."
+  type        = list(string)
+  default     = []
 }
