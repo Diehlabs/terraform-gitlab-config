@@ -1,9 +1,5 @@
 output "name" {
-  value = try(
-    gitlab_project.empty[0].name,
-    gitlab_project.from_template[0].name,
-    null
-  )
+  value = local.project.name
 }
 
 output "id" {
@@ -29,11 +25,7 @@ output "namespace_id" {
 
 output "path_with_namespace" {
   description = "The full path of the repository."
-  value = try(
-    gitlab_project.empty[0].path_with_namespace,
-    gitlab_project.from_template[0].path_with_namespace,
-    null
-  )
+  value       = local.project.path_with_namespace
 }
 
 output "path" {
@@ -64,4 +56,15 @@ output "project_obj" {
     gitlab_project.from_template[0],
     null
   )
+}
+
+output "create_deploy_token" {
+  description = "A deploy token scoped to this project."
+  sensitive   = true
+  value       = try(gitlab_deploy_token.default.token, null)
+}
+
+output "create_deploy_token_username" {
+  description = "The name token scoped to this project."
+  value       = try(gitlab_deploy_token.default.username, null)
 }

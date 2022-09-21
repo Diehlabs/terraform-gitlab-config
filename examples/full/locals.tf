@@ -63,6 +63,8 @@ locals {
     disable_overriding_approvers_per_merge_request = true
     external_wiki_url                              = "https://verituity.atlassian.net/wiki/spaces/REGISTRY/pages/1683619841/Developer+and+Engineer+Onboarding+Guide"
     branch_name_regex                              = "^(prov04mainbranch|feature|hotfix|bugfix|release)\\/"
+    create_deploy_token                            = true
+    deploy_token_scopes                            = ["read_repository"]
     environments = {
       env_01 = {
         name         = "prod"

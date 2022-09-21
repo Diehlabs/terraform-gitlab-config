@@ -9,7 +9,7 @@ stages:
   - test
   - release
 
-image: registry.gitlab.com/verituity/devops/docker-images/go-build/terra:latest
+image: registry.gitlab.com/verituity/devops/docker-images/go-build/terraform:v1.3.630343137
 
 variables:
   # these vars are used to complete the partial terraform http backend configuration, if there is one defined in the root module
@@ -20,17 +20,17 @@ variables:
   # Using a PAT for my own account since there's no other alternative that I am aware of.
   TF_HTTP_PASSWORD: "$GITLAB_TOKEN"
   # these vars must be incremented when the developer deems necessary
-  TF_CLI_VERSION: '1.2.7'
+  TF_CLI_VERSION: '1.2.9'
   TERRATEST_LOG_PARSER_VERSION: '0.40.17'
   TERRATEST_TIMEOUT: '15m'
-  TF_MODULE_VERSION: '0.2.0'
+  TF_MODULE_VERSION: '0.3.0'
 
 include:
   - project: 'verituity/devops/cicd-templates'
     file:
-      - /terraform/terraform.yml
+      - /infra/terraform_jobs.yml
       - /util/git-tag.yml
-    ref: v0.2.2
+    ref: v0.3.353
 
 Terraform Validate:
   stage: lint
