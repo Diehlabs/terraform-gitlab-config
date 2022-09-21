@@ -91,14 +91,6 @@ data "gitlab_project" "template_project" {
 #   approvers_users = [for user.id in data.gitlab_group.approvers]
 # }
 
-# resource "gitlab_project_approval_rule" "example-one" {
-#   count = var.approval_rule = {} ? 0 : 1
-#   project            = gitlab_project.project.id
-#   name               = lookup(var.approval_rule, "name", "Verituity Standard Approval")
-#   approvals_required = lookup(var.approval_rule, "approvers", 2)
-#   user_ids           = local.approvers_users
-#   # group_ids          = lookup(var.approval_rule, "groups", [])
-# }
 
 # -----------------------------------------------------------------------------
 # Add a file to the repo on first run.

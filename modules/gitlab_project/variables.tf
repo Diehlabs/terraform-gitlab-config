@@ -201,3 +201,13 @@ variable "deploy_token_scopes" {
   type        = list(string)
   default     = []
 }
+
+variable "approval_rule" {
+  description = <<EOT
+Approval rule definition. Map of the following properties:
+name               = string
+approvals_required = number
+user_ids           = list(string)
+group_ids          = list(string)
+  EOT
+}
