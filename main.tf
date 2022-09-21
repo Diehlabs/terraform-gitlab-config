@@ -22,7 +22,7 @@ locals {
     group_ids          = []
   }
 
-  project_level_mr_approvals_default = {
+  merge_request_approval_settings_default = {
     reset_approvals_on_push                        = true
     disable_overriding_approvers_per_merge_request = true
     merge_requests_author_approval                 = false
@@ -117,8 +117,8 @@ module "gitlab_projects" {
   create_deploy_token                   = try(each.value.create_deploy_token, false)
   deploy_token_scopes                   = try(each.value.shared_runners_enabled, ["read_repository", "read_registry", "read_package_registry"])
   merge_request_approval_settings = try(
-    local.project_level_mr_approvals_default,
-    var.defaults.project_level_mr_approvals_default,
+    local.merge_request_approval_settings_default,
+    var.defaults.merge_request_approval_settings_default,
     each.value.merge_request_approval_settings
   )
   approval_rule = merge(
