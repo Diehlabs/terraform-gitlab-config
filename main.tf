@@ -117,9 +117,9 @@ module "gitlab_projects" {
   create_deploy_token                   = try(each.value.create_deploy_token, false)
   deploy_token_scopes                   = try(each.value.shared_runners_enabled, ["read_repository", "read_registry", "read_package_registry"])
   merge_request_approval_settings = try(
-    local.merge_request_approval_settings_default,
-    var.defaults.merge_request_approval_settings_default,
-    each.value.merge_request_approval_settings
+    try(each.value.project.merge_request_approval_settings),
+    try(var.defaults.project.merge_request_approval_settings_default),
+    local.merge_request_approval_settings_default
   )
   approval_rule = merge(
     local.approval_rule_default,
