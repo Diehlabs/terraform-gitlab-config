@@ -15,6 +15,13 @@ locals {
     branch_name_regex      = "^(main|feature|hotfix|bugfix|release)\\/"
   }
 
+  approval_rule_default = {
+    name               = "Verituity Default"
+    approvals_required = 1
+    user_ids           = []
+    group_ids          = []
+  }
+
   project_level_mr_approvals_default = {
     reset_approvals_on_push                        = true
     disable_overriding_approvers_per_merge_request = true
@@ -109,8 +116,16 @@ module "gitlab_projects" {
   shared_runners_enabled                = try(each.value.shared_runners_enabled, true)
   create_deploy_token                   = try(each.value.create_deploy_token, false)
   deploy_token_scopes                   = try(each.value.shared_runners_enabled, ["read_repository", "read_registry", "read_package_registry"])
-  merge_request_approval_settings       = try(each.value.merge_request_approval_settings, {})
-
+  merge_request_approval_settings = try(
+    var.defaults.project_level_mr_approvals_default,
+    local.project_level_mr_approvals_default,
+    each.value.merge_request_approval_settings
+  )
+  approval_rule = merge(
+    local.approval_rule_default,
+    try(var.defaults.project.approval_rule, {}),
+    try(each.value.project.approval_rule, {})
+  )
   push_rules = merge(
     local.push_rules_default,
     try(var.defaults.project.push_rules, {}),
