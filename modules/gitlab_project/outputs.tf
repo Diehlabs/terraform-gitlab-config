@@ -18,10 +18,10 @@ output "default_branch" {
   )
 }
 
-output "namespace_id" {
-  description = "Namespace ID, i.e. the parent group ID"
-  value       = data.gitlab_group.parent_group.id
-}
+# output "namespace_id" {
+#   description = "Namespace ID, i.e. the parent group ID"
+#   value       = data.gitlab_group.parent_group.id
+# }
 
 output "path_with_namespace" {
   description = "The full path of the repository."

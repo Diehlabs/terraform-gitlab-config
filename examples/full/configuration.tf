@@ -8,7 +8,7 @@ locals {
       push_rules = {
         branch_name_regex = "^(defaultmainbranch|feature|hotfix|bugfix|release)\\/"
       }
-      merge_request_approval_settings = {
+      merge_request_approval_settings_default = {
         # allow overriding number of approvers per merge request
         disable_overriding_approvers_per_merge_request = false
       }

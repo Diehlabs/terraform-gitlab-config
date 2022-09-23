@@ -12,6 +12,7 @@ variable "visibility_level" {
 # }
 
 variable "parent_group_name" {}
+# variable "parent_group_id" {}
 
 variable "default_branch" {
   default = "main"
@@ -210,4 +211,9 @@ approvals_required = number
 user_ids           = list(string)
 group_ids          = list(string)
   EOT
+}
+
+variable "create_deployment_environments" {
+  description = "Whether to create standard environments and approval settings."
+  type        = bool
 }
