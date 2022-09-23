@@ -54,6 +54,7 @@ locals {
   )
 
 }
+
 # -----------------------------------------------------------------------------
 # Create all Gitlab groups first.
 # -----------------------------------------------------------------------------
@@ -100,36 +101,37 @@ module "gitlab_projects" {
   packages_enabled                      = try(each.value.packages_enabled, false)
   mirror                                = try(each.value.mirror, false)
   init_with_readme                      = try(each.value.init_with_readme, false)
-  merge_trains_enabled                  = try(each.value.merge_trains_enabled, false)
-  merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, true)
   request_access_enabled                = try(each.value.request_access_enabled, false)
   container_registry_enabled            = try(each.value.container_registry_enabled, false)
   external_wiki_url                     = try(each.value.external_wiki_url, null)
   environments                          = try(each.value.environments, {})
   pipeline_schedules                    = try(each.value.pipeline_schedules, {})
   pipelines_enabled                     = try(each.value.pipelines_enabled, true)
+  merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, null)
+  merge_trains_enabled                  = try(each.value.merge_trains_enabled, false)
   project_variables                     = try(each.value.project_variables, {})
   lfs_enabled                           = try(each.value.lfs_enabled, false)
   issues_enabled                        = try(each.value.issues_enabled, false)
   remove_source_branch_after_merge      = try(each.value.remove_source_branch_after_merge, true)
-  only_allow_merge_if_pipeline_succeeds = try(each.value.only_allow_merge_if_pipeline_succeeds, true)
+  only_allow_merge_if_pipeline_succeeds = try(each.value.only_allow_merge_if_pipeline_succeeds, null)
   shared_runners_enabled                = try(each.value.shared_runners_enabled, true)
   create_deploy_token                   = try(each.value.create_deploy_token, false)
   deploy_token_scopes                   = try(each.value.shared_runners_enabled, ["read_repository", "read_registry", "read_package_registry"])
-  merge_request_approval_settings = try(
-    try(each.value.project.merge_request_approval_settings),
-    try(var.defaults.project.merge_request_approval_settings_default),
-    local.merge_request_approval_settings_default
+  create_deployment_environments        = try(each.value.create_deployment_environments, true)
+  merge_request_approval_settings = merge(
+    local.merge_request_approval_settings_default,
+    try(var.defaults.project.merge_request_approval_settings_default, {}),
+    try(each.value.merge_request_approval_settings, {})
   )
   approval_rule = merge(
     local.approval_rule_default,
     try(var.defaults.project.approval_rule, {}),
-    try(each.value.project.approval_rule, {})
+    try(each.value.approval_rule, {})
   )
   push_rules = merge(
     local.push_rules_default,
     try(var.defaults.project.push_rules, {}),
-    try(each.value.project.push_rules, {})
+    try(each.value.push_rules, {})
   )
 
   depends_on = [module.gitlab_groups]
