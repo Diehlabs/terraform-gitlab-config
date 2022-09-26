@@ -9,18 +9,17 @@ locals {
     non_prod   = []
   }
 
-  # this value will be used by other resources to determin the resource to attach to,
-  # depending on which is created.
+  # this value will be used by other resources to determine the resource to attach to, depending on which is created.
   project = try(
     gitlab_project.empty[0],
     gitlab_project.from_template[0],
   )
 
-  project_name_sanitzed = lower(replace("${local.project.name}", " ", "-"))
+  only_allow_merge_if_pipeline_succeeds = anytrue([
+    var.only_allow_merge_if_pipeline_succeeds,
+    var.merge_pipelines_enabled
+  ])
 
-  # Enable merge pipelines if specifically enabled, if pipelines are enabled, or default to disabled.
-  # Enabling this will cause merge requests to hang forever waiting for pipeline status if there is no pipeline to run.
-  merge_pipelines_enabled               = try(var.merge_pipelines_enabled, var.pipelines_enabled, false)
-  only_allow_merge_if_pipeline_succeeds = try(var.only_allow_merge_if_pipeline_succeeds, local.merge_pipelines_enabled, false)
+  project_name_sanitzed = lower(replace("${local.project.name}", " ", "-"))
 
 }

@@ -20,7 +20,7 @@ resource "gitlab_project" "empty" {
   pipelines_enabled                     = var.pipelines_enabled
   issues_enabled                        = var.issues_enabled
   lfs_enabled                           = var.lfs_enabled
-  merge_pipelines_enabled               = local.merge_pipelines_enabled
+  merge_pipelines_enabled               = var.merge_pipelines_enabled
   merge_trains_enabled                  = var.merge_trains_enabled
   wiki_enabled                          = var.wiki_enabled
   wiki_access_level                     = var.wiki_enabled ? "private" : "disabled"
@@ -63,7 +63,7 @@ resource "gitlab_project" "from_template" {
   pipelines_enabled                     = var.pipelines_enabled
   issues_enabled                        = var.issues_enabled
   lfs_enabled                           = var.lfs_enabled
-  merge_pipelines_enabled               = local.merge_pipelines_enabled
+  merge_pipelines_enabled               = var.merge_pipelines_enabled
   merge_trains_enabled                  = var.merge_trains_enabled
   wiki_enabled                          = var.wiki_enabled
   wiki_access_level                     = var.wiki_enabled ? "private" : "disabled"

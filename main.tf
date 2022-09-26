@@ -90,32 +90,34 @@ module "group_access_tokens" {
 # Create all projects for all groups.
 # -----------------------------------------------------------------------------
 module "gitlab_projects" {
-  source                                = "./modules/gitlab_project"
-  for_each                              = local.all_projects
-  name                                  = each.value.name
-  description                           = each.value.description
-  parent_group_name                     = each.value.group_path #try(module.gitlab_groups[lookup(each.value, "group_path", null)], var.defaults.group_path)
-  default_branch                        = try(each.value.main_branch, local.main_branch)
-  merge_method                          = try(each.value.merge_method, "merge")
-  wiki_enabled                          = try(each.value.wiki_enabled, false)
-  packages_enabled                      = try(each.value.packages_enabled, false)
-  mirror                                = try(each.value.mirror, false)
-  init_with_readme                      = try(each.value.init_with_readme, false)
-  request_access_enabled                = try(each.value.request_access_enabled, false)
-  container_registry_enabled            = try(each.value.container_registry_enabled, false)
-  external_wiki_url                     = try(each.value.external_wiki_url, null)
-  create_deployment_environments        = try(each.value.create_deployment_environments, var.defaults.project.create_deployment_environments, false)
-  deployment_environments_production    = try(each.value.deployment_environments_production, var.defaults.project.deployment_environments_production, [])
-  deployment_environments_non_prod      = try(each.value.deployment_environments_non_prod, var.defaults.project.deployment_environments_non_prod, [])
-  pipeline_schedules                    = try(each.value.pipeline_schedules, {})
-  pipelines_enabled                     = try(each.value.pipelines_enabled, true)
-  merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, var.defaults.project.merge_pipelines_enabled, null)
-  merge_trains_enabled                  = try(each.value.merge_trains_enabled, false)
+  source                             = "./modules/gitlab_project"
+  for_each                           = local.all_projects
+  name                               = each.value.name
+  description                        = each.value.description
+  parent_group_name                  = each.value.group_path #try(module.gitlab_groups[lookup(each.value, "group_path", null)], var.defaults.group_path)
+  default_branch                     = try(each.value.main_branch, local.main_branch)
+  merge_method                       = try(each.value.merge_method, "merge")
+  wiki_enabled                       = try(each.value.wiki_enabled, false)
+  packages_enabled                   = try(each.value.packages_enabled, false)
+  mirror                             = try(each.value.mirror, false)
+  init_with_readme                   = try(each.value.init_with_readme, false)
+  request_access_enabled             = try(each.value.request_access_enabled, false)
+  container_registry_enabled         = try(each.value.container_registry_enabled, false)
+  external_wiki_url                  = try(each.value.external_wiki_url, null)
+  create_deployment_environments     = try(each.value.create_deployment_environments, var.defaults.project.create_deployment_environments, false)
+  deployment_environments_production = try(each.value.deployment_environments_production, var.defaults.project.deployment_environments_production, [])
+  deployment_environments_non_prod   = try(each.value.deployment_environments_non_prod, var.defaults.project.deployment_environments_non_prod, [])
+  pipeline_schedules                 = try(each.value.pipeline_schedules, {})
+  pipelines_enabled                  = try(each.value.pipelines_enabled, true)
+  # Enable merge pipelines if specifically enabled, if pipelines are enabled, or default to disabled.
+  # Enabling this will cause merge requests to hang forever waiting for pipeline status if there is no pipeline to run.
+  merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, var.defaults.project.merge_pipelines_enabled, true)
+  only_allow_merge_if_pipeline_succeeds = try(each.value.only_allow_merge_if_pipeline_succeeds, var.defaults.project.only_allow_merge_if_pipeline_succeeds, null)
+  merge_trains_enabled                  = try(each.value.merge_trains_enabled, var.defaults.project.merge_trains_enabled, false)
   project_variables                     = try(each.value.project_variables, {})
   lfs_enabled                           = try(each.value.lfs_enabled, false)
   issues_enabled                        = try(each.value.issues_enabled, false)
   remove_source_branch_after_merge      = try(each.value.remove_source_branch_after_merge, true)
-  only_allow_merge_if_pipeline_succeeds = try(each.value.only_allow_merge_if_pipeline_succeeds, var.defaults.project.only_allow_merge_if_pipeline_succeeds, null)
   shared_runners_enabled                = try(each.value.shared_runners_enabled, true)
   create_deploy_token                   = try(each.value.create_deploy_token, false)
   deploy_token_scopes                   = try(each.value.shared_runners_enabled, ["read_repository", "read_registry", "read_package_registry"])
