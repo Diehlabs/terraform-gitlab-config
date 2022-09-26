@@ -115,7 +115,7 @@ module "gitlab_projects" {
   lfs_enabled                           = try(each.value.lfs_enabled, false)
   issues_enabled                        = try(each.value.issues_enabled, false)
   remove_source_branch_after_merge      = try(each.value.remove_source_branch_after_merge, true)
-  only_allow_merge_if_pipeline_succeeds = try(each.value.only_allow_merge_if_pipeline_succeeds, null)
+  only_allow_merge_if_pipeline_succeeds = try(each.value.only_allow_merge_if_pipeline_succeeds, var.defaults.project.only_allow_merge_if_pipeline_succeeds, null)
   shared_runners_enabled                = try(each.value.shared_runners_enabled, true)
   create_deploy_token                   = try(each.value.create_deploy_token, false)
   deploy_token_scopes                   = try(each.value.shared_runners_enabled, ["read_repository", "read_registry", "read_package_registry"])
