@@ -20,8 +20,7 @@ locals {
 
   # Enable merge pipelines if specifically enabled, if pipelines are enabled, or default to disabled.
   # Enabling this will cause merge requests to hang forever waiting for pipeline status if there is no pipeline to run.
-  only_allow_merge_if_pipeline_succeeds = try(var.only_allow_merge_if_pipeline_succeeds, false)
-
-  merge_pipelines_enabled = try(var.merge_pipelines_enabled, var.pipelines_enabled, false)
+  merge_pipelines_enabled               = try(var.merge_pipelines_enabled, var.pipelines_enabled, false)
+  only_allow_merge_if_pipeline_succeeds = try(var.only_allow_merge_if_pipeline_succeeds, local.merge_pipelines_enabled, false)
 
 }
