@@ -39,7 +39,11 @@ variable "share_groups" {
 variable "merge_pipelines_enabled" {
   description = "Enable pipelines for merge/pull requests."
   type        = bool
-  default     = true
+}
+
+variable "only_allow_merge_if_pipeline_succeeds" {
+  description = "Only allow merge if merge pipeline succeeds"
+  type        = bool
 }
 
 # -----------------------------------------------------------------------------
@@ -148,12 +152,6 @@ variable "issues_enabled" {
 
 variable "remove_source_branch_after_merge" {
   description = "Remove the source branch after completed merge"
-  type        = bool
-  default     = true
-}
-
-variable "only_allow_merge_if_pipeline_succeeds" {
-  description = "Only allow merge if merge pipeline succeeds"
   type        = bool
   default     = true
 }
