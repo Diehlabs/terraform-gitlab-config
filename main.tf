@@ -109,7 +109,7 @@ module "gitlab_projects" {
   deployment_environments_non_prod      = try(each.value.deployment_environments_non_prod, var.defaults.project.deployment_environments_non_prod, [])
   pipeline_schedules                    = try(each.value.pipeline_schedules, {})
   pipelines_enabled                     = try(each.value.pipelines_enabled, true)
-  merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, null)
+  merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, var.defaults.project.merge_pipelines_enabled, null)
   merge_trains_enabled                  = try(each.value.merge_trains_enabled, false)
   project_variables                     = try(each.value.project_variables, {})
   lfs_enabled                           = try(each.value.lfs_enabled, false)
