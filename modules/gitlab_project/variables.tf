@@ -26,10 +26,6 @@ variable "push_rules" {
   default = {}
 }
 
-variable "environments" {
-  default = {}
-}
-
 variable "share_groups" {
   default     = {}
   type        = any
@@ -216,4 +212,12 @@ group_ids          = list(string)
 variable "create_deployment_environments" {
   description = "Whether to create standard environments and approval settings."
   type        = bool
+}
+
+variable "deployment_environments_non_prod" {
+  default = []
+}
+
+variable "deployment_environments_production" {
+  default = []
 }
