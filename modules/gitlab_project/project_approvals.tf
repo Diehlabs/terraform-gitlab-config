@@ -10,6 +10,17 @@ resource "gitlab_project_level_mr_approvals" "mra" {
   merge_requests_disable_committers_approval     = var.merge_request_approval_settings.merge_requests_disable_committers_approval
 }
 
+# -----------------------------------------------------------------------------
+# Note that if a project level approval rule is created outside of Terraform,
+#   it will need to be imported. Something as simple as setting minimum approvers
+#   to "1" will create the "any_approver" rule and then it must be imported.
+#
+# Get a list of existing rules:
+# https://docs.gitlab.com/ee/api/merge_request_approvals.html#get-project-level-rules
+#
+# Import a rule:
+# https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_approval_rule#import
+# -----------------------------------------------------------------------------
 resource "gitlab_project_approval_rule" "default" {
   project            = local.project.id
   name               = var.approval_rule.name
