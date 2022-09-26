@@ -3,7 +3,6 @@
 # https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_environment
 # -----------------------------------------------------------------------------
 resource "gitlab_project_environment" "non_prod" {
-  # for_each            = var.environments
   for_each            = toset(local.deployment_environments.non_prod)
   project             = local.project.id
   name                = each.value
@@ -12,7 +11,6 @@ resource "gitlab_project_environment" "non_prod" {
 }
 
 resource "gitlab_project_environment" "production" {
-  # for_each            = var.environments
   for_each            = toset(local.deployment_environments.production)
   project             = local.project.id
   name                = each.value

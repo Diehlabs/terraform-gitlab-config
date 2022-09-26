@@ -104,7 +104,9 @@ module "gitlab_projects" {
   request_access_enabled                = try(each.value.request_access_enabled, false)
   container_registry_enabled            = try(each.value.container_registry_enabled, false)
   external_wiki_url                     = try(each.value.external_wiki_url, null)
-  environments                          = try(each.value.environments, {})
+  create_deployment_environments        = try(each.value.create_deployment_environments, var.defaults.project.create_deployment_environments, false)
+  deployment_environments_production    = try(each.value.deployment_environments_production, var.defaults.project.deployment_environments_production, [])
+  deployment_environments_non_prod      = try(each.value.deployment_environments_non_prod, var.defaults.project.deployment_environments_non_prod, [])
   pipeline_schedules                    = try(each.value.pipeline_schedules, {})
   pipelines_enabled                     = try(each.value.pipelines_enabled, true)
   merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, null)
@@ -117,7 +119,6 @@ module "gitlab_projects" {
   shared_runners_enabled                = try(each.value.shared_runners_enabled, true)
   create_deploy_token                   = try(each.value.create_deploy_token, false)
   deploy_token_scopes                   = try(each.value.shared_runners_enabled, ["read_repository", "read_registry", "read_package_registry"])
-  create_deployment_environments        = try(each.value.create_deployment_environments, true)
   merge_request_approval_settings = merge(
     local.merge_request_approval_settings_default,
     try(var.defaults.project.merge_request_approval_settings_default, {}),
