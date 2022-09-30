@@ -8,6 +8,7 @@ resource "gitlab_project" "empty" {
   mirror     = var.mirror
   # identical to templated
   name                                  = var.name
+  path                                  = var.path
   description                           = var.description
   namespace_id                          = data.gitlab_group.parent_group.id
   visibility_level                      = var.visibility_level

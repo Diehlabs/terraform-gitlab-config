@@ -95,6 +95,7 @@ module "gitlab_projects" {
   name                               = each.value.name
   description                        = each.value.description
   parent_group_name                  = each.value.group_path #try(module.gitlab_groups[lookup(each.value, "group_path", null)], var.defaults.group_path)
+  path                               = lower(replace(try(each.value.path, each.value.name), " ", "-"))
   default_branch                     = try(each.value.main_branch, var.defaults.project.default_branch, local.main_branch)
   merge_method                       = try(each.value.merge_method, var.defaults.project.merge_method, "merge")
   wiki_enabled                       = try(each.value.wiki_enabled, false)
