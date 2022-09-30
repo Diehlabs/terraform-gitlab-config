@@ -2,6 +2,10 @@ variable "name" {}
 
 variable "description" {}
 
+variable "path" {
+  description = "Short path for the project. Usually the same as the name but without spaces."
+}
+
 variable "visibility_level" {
   default = "private"
 }
