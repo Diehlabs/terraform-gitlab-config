@@ -25,7 +25,7 @@ resource "gitlab_project_environment" "production" {
 resource "gitlab_project_protected_environment" "non_prod" {
   for_each                = gitlab_project_environment.non_prod
   project                 = each.value.project
-  required_approval_count = 1
+  required_approval_count = 0
   environment             = each.value.name
   deploy_access_levels {
     access_level = "developer"
