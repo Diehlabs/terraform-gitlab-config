@@ -223,3 +223,8 @@ variable "deployment_environments_non_prod" {
 variable "deployment_environments_production" {
   default = []
 }
+
+variable "squash_option" {
+  description = "Squash commits when merge request. Valid values are never, always, default_on, or default_off."
+  default     = "default_on"
+}
