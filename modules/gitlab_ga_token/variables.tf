@@ -2,8 +2,7 @@ variable "gitlab_group_access_token_scopes" {
   description = "Scopes to be used for the group access token. Only used if create_group_access_token is set to true."
   type        = list(string)
   default = [
-    "read_api",
-    "read_repository",
+    "api",
   ]
   # add constraints here to ensure only acceptable values are passed..
 }
