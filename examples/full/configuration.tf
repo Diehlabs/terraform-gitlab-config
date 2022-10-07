@@ -65,6 +65,7 @@ locals {
     branch_name_regex                              = "^(prov04mainbranch|feature|hotfix|bugfix|release)\\/"
     create_deploy_token                            = true
     deploy_token_scopes                            = ["read_repository"]
+    squash_option                                  = "always"
     environments = {
       env_01 = {
         name         = "prod"
