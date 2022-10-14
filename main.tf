@@ -63,8 +63,10 @@ module "gitlab_groups" {
   for_each          = var.groups
   name              = each.value.name
   description       = each.value.description
+  path              = try(each.value.path, null)
   share_groups      = lookup(each.value, "share_groups", {})
   parent_group_name = try(each.value.parent_group_name, var.defaults.group_path)
+  access_tokens     = try(each.value.access_tokens, {})
   # create_group_access_token = try(each.value.create_group_access_token, false)
   # gitlab_group_access_token_scopes = try(
   #   each.value.gitlab_group_access_token_scopes,

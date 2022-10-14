@@ -1,7 +1,9 @@
 variable "name" {}
 
 variable "path" {
-  default = null
+  description = "(Optional) the path to be used in the URL. Use if other than the group name is desired."
+  type        = string
+  default     = null
 }
 
 variable "description" {}
@@ -43,3 +45,7 @@ variable "share_groups" {
 #   ]
 #   # add constraints here to ensure only acceptable values are passed..
 # }
+
+variable "access_tokens" {
+  type = map(any)
+}

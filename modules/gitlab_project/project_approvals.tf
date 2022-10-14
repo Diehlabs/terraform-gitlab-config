@@ -25,6 +25,6 @@ resource "gitlab_project_approval_rule" "default" {
   project            = local.project.id
   name               = var.approval_rule.name
   approvals_required = var.approval_rule.approvals_required
-  user_ids           = var.approval_rule.user_ids
-  group_ids          = var.approval_rule.group_ids
+  user_ids           = sort(var.approval_rule.user_ids)
+  group_ids          = sort(var.approval_rule.group_ids)
 }
