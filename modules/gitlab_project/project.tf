@@ -2,7 +2,9 @@
 # Create the project (repo).
 # -----------------------------------------------------------------------------
 resource "gitlab_project" "empty" {
-  count = var.template_project_path == null ? 1 : 0
+  # count = var.template_project_path == null ? 1 : 0
+  count = 1
+
   # exclusive to non-templated projects
   import_url = var.import_url
   mirror     = var.mirror

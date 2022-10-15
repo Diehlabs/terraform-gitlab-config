@@ -25,5 +25,14 @@ output "runners_token" {
 
 output "group_obj" {
   description = "The entire group object that was created."
-  value       = gitlab_group.group
+  value = merge(
+    gitlab_group.group,
+    { access_tokens = { for k, v in gitlab_group_access_token.gat : k => v.token } }
+  )
+}
+
+output "access_tokens" {
+  value = {
+    for k, v in gitlab_group_access_token.gat : k => v.token
+  }
 }
