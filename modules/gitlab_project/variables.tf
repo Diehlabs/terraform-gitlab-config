@@ -15,8 +15,8 @@ variable "visibility_level" {
 #   description = "The namespace/path (group or user) of the project."
 # }
 
-variable "parent_group_name" {}
-# variable "parent_group_id" {}
+# variable "parent_group_name" {}
+variable "parent_group_id" {}
 
 variable "default_branch" {
   default = "main"

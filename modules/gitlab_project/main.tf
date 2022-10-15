@@ -1,9 +1,3 @@
-data "gitlab_group" "parent_group" {
-  full_path = lower(
-    replace(var.parent_group_name, " ", "-")
-  )
-}
-
 data "gitlab_project" "template_project" {
   count               = try(var.template_project_path, null) == null ? 0 : 1
   path_with_namespace = var.template_project_path
