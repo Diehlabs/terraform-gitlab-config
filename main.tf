@@ -37,34 +37,24 @@ locals {
   # defaults for group access tokens created and stored as GA_CICD_TOKEN
   gitlab_group_access_token_scopes_default = ["read_api", "read_repository"]
 
-  # Generate a new object that converts a group name to a full path when creating projects.
-  all_projects = (
-    {
-      for name, proj in var.projects :
-      name => merge(
-        proj,
-        {
-          group_path = try(
-            module.gitlab_groups[lookup(proj, "group_key_name", null)].full_path,
-            var.defaults.group_path,
-          )
-        }
-      )
-    }
-  )
+}
 
+data "gitlab_group" "main" {
+  full_path = var.defaults.group_path
 }
 
 # -----------------------------------------------------------------------------
 # Create all Gitlab groups first.
 # -----------------------------------------------------------------------------
 module "gitlab_groups" {
-  source            = "./modules/gitlab_group"
-  for_each          = var.groups
-  name              = each.value.name
-  description       = each.value.description
-  share_groups      = lookup(each.value, "share_groups", {})
+  source      = "./modules/gitlab_group"
+  for_each    = var.groups
+  name        = each.value.name
+  description = each.value.description
+  path        = try(each.value.path, null)
+  # share_groups      = try(each.value.share_groups, {})
   parent_group_name = try(each.value.parent_group_name, var.defaults.group_path)
+  access_tokens     = try(each.value.access_tokens, {})
   # create_group_access_token = try(each.value.create_group_access_token, false)
   # gitlab_group_access_token_scopes = try(
   #   each.value.gitlab_group_access_token_scopes,
@@ -90,11 +80,12 @@ module "group_access_tokens" {
 # Create all projects for all groups.
 # -----------------------------------------------------------------------------
 module "gitlab_projects" {
-  source                             = "./modules/gitlab_project"
-  for_each                           = local.all_projects
-  name                               = each.value.name
-  description                        = each.value.description
-  parent_group_name                  = each.value.group_path #try(module.gitlab_groups[lookup(each.value, "group_path", null)], var.defaults.group_path)
+  source          = "./modules/gitlab_project"
+  for_each        = var.projects
+  name            = each.value.name
+  description     = each.value.description
+  parent_group_id = try(module.gitlab_groups[each.value.group_key_name].id, data.gitlab_group.main.id)
+  # parent_group_name                  = try(module.gitlab_groups[each.value.group_key_name].full_path, var.defaults.group_path)
   path                               = lower(replace(try(each.value.path, each.value.name), " ", "-"))
   default_branch                     = try(each.value.main_branch, var.defaults.project.default_branch, local.main_branch)
   merge_method                       = try(each.value.merge_method, var.defaults.project.merge_method, "merge")
