@@ -37,21 +37,10 @@ locals {
   # defaults for group access tokens created and stored as GA_CICD_TOKEN
   gitlab_group_access_token_scopes_default = ["read_api", "read_repository"]
 
-  # Generate a new object that converts a group name to a full path when creating projects.
-  # all_projects = {
-  #   for name, proj in var.projects :
-  #   name => merge(
-  #     proj,
-  #     {
-  #       group_path = try(
-  #         module.gitlab_groups[lookup(proj, "group_key_name", null)].full_path,
-  #         var.defaults.group_path,
-  #       )
-  #     }
-  #   )
-  # }
+}
 
-
+data "gitlab_group" "main" {
+  full_path = var.defaults.group_path
 }
 
 # -----------------------------------------------------------------------------
@@ -95,7 +84,7 @@ module "gitlab_projects" {
   for_each        = var.projects
   name            = each.value.name
   description     = each.value.description
-  parent_group_id = module.gitlab_groups[each.value.group_key_name].id
+  parent_group_id = try(module.gitlab_groups[each.value.group_key_name].id, data.gitlab_group.main.id)
   # parent_group_name                  = try(module.gitlab_groups[each.value.group_key_name].full_path, var.defaults.group_path)
   path                               = lower(replace(try(each.value.path, each.value.name), " ", "-"))
   default_branch                     = try(each.value.main_branch, var.defaults.project.default_branch, local.main_branch)
