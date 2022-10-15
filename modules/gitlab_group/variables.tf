@@ -30,11 +30,11 @@ variable "share_groups" {
   # }
 }
 
-# variable "create_group_access_token" {
-#   description = "If set to true will create a GAT and add it as a CICD variable named GA_TOKEN on the managed group. This would be used with CICD."
-#   type        = bool
-#   default     = false
-# }
+variable "create_group_access_token" {
+  description = "If set to true will create a GAT and add it as a CICD variable named GA_TOKEN on the managed group. This would be used with CICD."
+  type        = bool
+  default     = false
+}
 
 # variable "gitlab_group_access_token_scopes" {
 #   description = "Scopes to be used for the group access token. Only used if create_group_access_token is set to true."

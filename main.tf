@@ -53,9 +53,9 @@ module "gitlab_groups" {
   description = each.value.description
   path        = try(each.value.path, null)
   # share_groups      = try(each.value.share_groups, {})
-  parent_group_name = try(each.value.parent_group_name, var.defaults.group_path)
-  access_tokens     = try(each.value.access_tokens, {})
-  # create_group_access_token = try(each.value.create_group_access_token, false)
+  parent_group_name         = try(each.value.parent_group_name, var.defaults.group_path)
+  access_tokens             = try(each.value.access_tokens, {})
+  create_group_access_token = try(each.value.create_group_access_token, false)
   # gitlab_group_access_token_scopes = try(
   #   each.value.gitlab_group_access_token_scopes,
   #   local.gitlab_group_access_token_scopes_default,
@@ -67,14 +67,14 @@ module "gitlab_groups" {
 # is specified and is set to true.
 # The token will be stored as GA_CICD_TOKEN variable on the group by default.
 # -----------------------------------------------------------------------------
-module "group_access_tokens" {
-  for_each = {
-    for key, group in var.groups : key => module.gitlab_groups[key].id
-    if try(group.create_group_access_token, false) == true
-  }
-  source   = "./modules/gitlab_ga_token"
-  group_id = each.value
-}
+# module "group_access_tokens" {
+#   for_each = {
+#     for key, group in var.groups : key => module.gitlab_groups[key].id
+#     if try(group.create_group_access_token, false) == true
+#   }
+#   source   = "./modules/gitlab_ga_token"
+#   group_id = each.value
+# }
 
 # -----------------------------------------------------------------------------
 # Create all projects for all groups.
