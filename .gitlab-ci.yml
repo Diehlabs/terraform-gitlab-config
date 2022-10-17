@@ -15,5 +15,4 @@ variables:
 include:
   - project: verituity/devops/cicd-templates
     file: infra/terraform-module.yml
-    ref: bugfix/terraform
-    # ref: v0.4-stable
+    ref: v0.4-stable
