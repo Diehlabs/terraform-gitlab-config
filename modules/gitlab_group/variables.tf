@@ -1,7 +1,9 @@
 variable "name" {}
 
 variable "path" {
-  default = null
+  description = "(Optional) the path to be used in the URL. Use if other than the group name is desired."
+  type        = string
+  default     = null
 }
 
 variable "description" {}
@@ -28,11 +30,11 @@ variable "share_groups" {
   # }
 }
 
-# variable "create_group_access_token" {
-#   description = "If set to true will create a GAT and add it as a CICD variable named GA_TOKEN on the managed group. This would be used with CICD."
-#   type        = bool
-#   default     = false
-# }
+variable "create_group_access_token" {
+  description = "If set to true will create a GAT and add it as a CICD variable named GA_TOKEN on the managed group. This would be used with CICD."
+  type        = bool
+  default     = false
+}
 
 # variable "gitlab_group_access_token_scopes" {
 #   description = "Scopes to be used for the group access token. Only used if create_group_access_token is set to true."
@@ -43,3 +45,7 @@ variable "share_groups" {
 #   ]
 #   # add constraints here to ensure only acceptable values are passed..
 # }
+
+variable "access_tokens" {
+  type = map(any)
+}

@@ -6,3 +6,4 @@
 terraform.auto.tfvars
 .dccache
 .terraform.lock.hcl
+temp

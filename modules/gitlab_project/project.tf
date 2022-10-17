@@ -2,7 +2,9 @@
 # Create the project (repo).
 # -----------------------------------------------------------------------------
 resource "gitlab_project" "empty" {
-  count = var.template_project_path == null ? 1 : 0
+  # count = var.template_project_path == null ? 1 : 0
+  count = 1
+
   # exclusive to non-templated projects
   import_url = var.import_url
   mirror     = var.mirror
@@ -10,7 +12,7 @@ resource "gitlab_project" "empty" {
   name                                  = var.name
   path                                  = var.path
   description                           = var.description
-  namespace_id                          = data.gitlab_group.parent_group.id
+  namespace_id                          = var.parent_group_id
   visibility_level                      = var.visibility_level
   default_branch                        = var.default_branch
   merge_method                          = var.merge_method
@@ -54,7 +56,7 @@ resource "gitlab_project" "from_template" {
   # identical to non-templated
   name                                  = var.name
   description                           = var.description
-  namespace_id                          = data.gitlab_group.parent_group.id
+  namespace_id                          = var.parent_group_id
   visibility_level                      = var.visibility_level
   default_branch                        = var.default_branch
   merge_method                          = var.merge_method
@@ -81,14 +83,4 @@ resource "gitlab_project" "from_template" {
     author_email_regex     = lookup(var.push_rules, "author_email_regex", "verituity\\.com$")
     commit_committer_check = lookup(var.push_rules, "commit_committer_check", true)
   }
-}
-
-# -----------------------------------------------------------------------------
-# Create CI badge for the project
-# -----------------------------------------------------------------------------
-resource "gitlab_project_badge" "project" {
-  project   = local.project.id
-  link_url  = "https://gitlab.com/${local.project.path_with_namespace}/commits/${local.project.default_branch}"
-  image_url = "https://gitlab.com/${local.project.path_with_namespace}/badges/${local.project.default_branch}/pipeline.svg"
-  name      = "CI"
 }
