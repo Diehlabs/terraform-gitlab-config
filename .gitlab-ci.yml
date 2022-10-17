@@ -3,6 +3,14 @@ variables:
   TERRATEST_LOG_PARSER_VERSION: '0.40.17'
   TERRATEST_TIMEOUT: '15m'
   MAJOR_MINOR_VERSION: '0.5'
+  # these vars are used to complete the partial terraform http backend configuration, if there is one defined in the root module
+  # defaults may also be supplied in the cicd templates
+  TF_HTTP_USERNAME: "gitlab-ci-token"
+  # GITLAB_TOKEN must have rights to both terraform state and gitlab - a group access token can not create another group access token..
+  # CI_JOB_TOKEN also does not have rights..
+  # Using a PAT for my own account since there's no other alternative that I am aware of.
+  TF_HTTP_PASSWORD: "$GITLAB_TOKEN"
+  # these vars must be incremented when the developer deems necessary
 
 include:
   - project: 'verituity/devops/cicd-templates'
