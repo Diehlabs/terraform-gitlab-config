@@ -1,0 +1,48 @@
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_PIPELINE_SOURCE == 'push'
+
+stages:
+  - lint
+  - scan
+  - test
+  - release
+
+image: registry.gitlab.com/verituity/devops/docker-images/go-build/terraform:v1.3.630343137
+
+variables:
+  # these vars are used to complete the partial terraform http backend configuration, if there is one defined in the root module
+  # defaults may also be supplied in the cicd templates
+  TF_HTTP_USERNAME: "gitlab-ci-token"
+  # GITLAB_TOKEN must have rights to both terraform state and gitlab - a group access token can not create another group access token..
+  # CI_JOB_TOKEN also does not have rights..
+  # Using a PAT for my own account since there's no other alternative that I am aware of.
+  TF_HTTP_PASSWORD: "$GITLAB_TOKEN"
+  # these vars must be incremented when the developer deems necessary
+  TF_CLI_VERSION: '1.2.9'
+  TERRATEST_LOG_PARSER_VERSION: '0.40.17'
+  TERRATEST_TIMEOUT: '15m'
+  TF_MODULE_VERSION: 'v0.4.9'
+
+include:
+  - project: 'verituity/devops/cicd-templates'
+    file:
+      - /infra/terraform_jobs.yml
+      - /util/git-tag.yml
+    ref: v0.3.353
+
+Terraform Validate:
+  stage: lint
+  extends: .terratest_validate
+
+Terratest:
+  stage: test
+  extends: .terratest
+
+Create Git tag:
+  stage: release
+  extends: .git_tag
+  variables:
+    GIT_TAG: "$TF_MODULE_VERSION"
+    GITLAB_API_TOKEN: "$GITLAB_TOKEN"
