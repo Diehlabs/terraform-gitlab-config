@@ -13,7 +13,7 @@ variables:
   # these vars must be incremented when the developer deems necessary
 
 include:
-  - project: 'verituity/devops/cicd-templates'
+  - project: verituity/devops/cicd-templates
     file: infra/terraform-module.yml
     ref: bugfix/terraform
     # ref: v0.4-stable
