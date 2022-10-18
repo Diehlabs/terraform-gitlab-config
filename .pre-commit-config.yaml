@@ -30,8 +30,12 @@ repos:
 #     - id: terraform-validate
 #     - id: terraform-fmt
 
-# - repo: https://github.com/terraform-docs/terraform-docs
-#   rev: "v0.16.0"
-#   hooks:
-#     - id: terraform-docs-system
-#       args: ["markdown", "--output-file", "README.md", "."]
+- repo: https://github.com/terraform-docs/terraform-docs
+  rev: "v0.16.0"
+  hooks:
+    - id: terraform-docs-system
+      args: ["markdown", "--output-file", "README.md", "."]
+    - id: terraform-docs-system
+      args: ["markdown", "--output-file", "README.md", "./modules/gitlab_group"]
+    - id: terraform-docs-system
+      args: ["markdown", "--output-file", "README.md", "./modules/gitlab_project"]
