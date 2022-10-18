@@ -6,6 +6,26 @@ locals {
   # In the projects module below, it will use a specific one if specified for each project, otherwise use this value.
   main_branch = try(var.defaults.main_branch, "main")
 
+  deployments_default = {
+    development = {
+      required_approval_count = 0
+      group_ids               = []
+      gitlab_roles            = ["developer"]
+    }
+
+    staging = {
+      required_approval_count = 2
+      group_ids               = []
+      gitlab_roles            = ["developer"]
+    }
+
+    production = {
+      required_approval_count = 2
+      group_ids               = []
+      gitlab_roles            = ["maintainer"]
+    }
+  }
+
   # these defaults will be applied or overridden based on first defaults and then project specifics passed in
   push_rules_default = {
     author_email_regex     = "@verituity\\.com$"
@@ -114,6 +134,9 @@ module "gitlab_projects" {
   create_deploy_token                   = try(each.value.create_deploy_token, var.defaults.project.create_deploy_token, false)
   deploy_token_scopes                   = try(each.value.deploy_token_scopes, ["read_repository", "read_registry", "read_package_registry"])
   squash_option                         = try(each.value.squash_option, var.defaults.project.squash_option, "default_on")
+  deploy_access_levels_development      = try(each.value.deployments.access_levels.development, var.defaults.deployments.access_levels.development, local.deployments_default.development)
+  deploy_access_levels_staging          = try(each.value.deployments.access_levels.staging, var.defaults.deployments.access_levels.staging, local.deployments_default.staging)
+  deploy_access_levels_production       = try(each.value.deployments.access_levels.production, var.defaults.deployments.access_levels.production, local.deployments_default.production)
   merge_request_approval_settings = merge(
     local.merge_request_approval_settings_default,
     try(var.defaults.project.merge_request_approval_settings_default, {}),

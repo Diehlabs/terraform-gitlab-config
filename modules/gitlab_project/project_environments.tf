@@ -2,18 +2,23 @@
 # Create environments for the project.
 # https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_environment
 # -----------------------------------------------------------------------------
-resource "gitlab_project_environment" "non_prod" {
-  for_each            = toset(local.deployment_environments.non_prod)
+resource "gitlab_project_environment" "development" {
   project             = local.project.id
-  name                = each.value
+  name                = "development"
+  stop_before_destroy = true
+  # external_url      = try(each.value.external_url, "")
+}
+
+resource "gitlab_project_environment" "staging" {
+  project             = local.project.id
+  name                = "staging"
   stop_before_destroy = true
   # external_url      = try(each.value.external_url, "")
 }
 
 resource "gitlab_project_environment" "production" {
-  for_each            = toset(local.deployment_environments.production)
   project             = local.project.id
-  name                = each.value
+  name                = "production"
   stop_before_destroy = true
   # external_url      = try(each.value.external_url, "")
 }
@@ -22,23 +27,63 @@ resource "gitlab_project_environment" "production" {
 # Create protected environments, aka define approvers for deployments.
 # https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_protected_environment
 # -----------------------------------------------------------------------------
-resource "gitlab_project_protected_environment" "non_prod" {
-  for_each                = gitlab_project_environment.non_prod
-  project                 = each.value.project
-  required_approval_count = 0
-  environment             = each.value.name
-  deploy_access_levels {
-    access_level = "developer"
+resource "gitlab_project_protected_environment" "development" {
+  project                 = local.project.id
+  required_approval_count = local.deploy_access_levels_development.required_approval_count
+  environment             = gitlab_project_environment.development.name
+
+  dynamic "deploy_access_levels" {
+    for_each = local.deploy_access_levels_development.group_ids
+    content {
+      group_id = deploy_access_levels.value
+    }
+  }
+
+  dynamic "deploy_access_levels" {
+    for_each = local.deploy_access_levels_development.gitlab_roles
+    content {
+      access_level = deploy_access_levels.value
+    }
+  }
+}
+
+resource "gitlab_project_protected_environment" "staging" {
+  project                 = local.project.id
+  required_approval_count = local.deploy_access_levels_staging.required_approval_count
+  environment             = gitlab_project_environment.staging.name
+
+  dynamic "deploy_access_levels" {
+    for_each = local.deploy_access_levels_staging.group_ids
+    content {
+      group_id = deploy_access_levels.value
+    }
+  }
+
+  dynamic "deploy_access_levels" {
+    for_each = local.deploy_access_levels_staging.gitlab_roles
+    content {
+      access_level = deploy_access_levels.value
+    }
   }
 }
 
 resource "gitlab_project_protected_environment" "production" {
-  for_each                = gitlab_project_environment.production
-  project                 = each.value.project
-  required_approval_count = 1
-  environment             = each.value.name
-  deploy_access_levels {
-    access_level = "maintainer"
+  project                 = local.project.id
+  required_approval_count = local.deploy_access_levels_production.required_approval_count
+  environment             = gitlab_project_environment.production.name
+
+  dynamic "deploy_access_levels" {
+    for_each = local.deploy_access_levels_production.group_ids
+    content {
+      group_id = deploy_access_levels.value
+    }
+  }
+
+  dynamic "deploy_access_levels" {
+    for_each = local.deploy_access_levels_production.gitlab_roles
+    content {
+      access_level = deploy_access_levels.value
+    }
   }
 
 }

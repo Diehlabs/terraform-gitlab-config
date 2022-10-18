@@ -23,4 +23,8 @@ locals {
 
   project_name_sanitzed = lower(replace("${local.project.name}", " ", "-"))
 
+  deploy_access_levels_development = try(var.deploy_access_levels_development, null)
+  deploy_access_levels_staging     = try(var.deploy_access_levels_staging, null)
+  deploy_access_levels_production  = try(var.deploy_access_levels_production, null)
+
 }
