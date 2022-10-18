@@ -40,6 +40,7 @@ locals {
     approvals_required = 1
     user_ids           = []
     group_ids          = []
+    rule_type          = "regular"
   }
 
   merge_request_approval_settings_default = {

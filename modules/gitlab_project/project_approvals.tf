@@ -27,4 +27,5 @@ resource "gitlab_project_approval_rule" "default" {
   approvals_required = var.approval_rule.approvals_required
   user_ids           = sort(var.approval_rule.user_ids)
   group_ids          = sort(var.approval_rule.group_ids)
+  rule_type          = var.approval_rule.rule_type
 }

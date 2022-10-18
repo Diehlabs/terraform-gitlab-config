@@ -13,33 +13,41 @@ All groups, including the top level "verituity" group should use this module to 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_gitlab"></a> [gitlab](#requirement\_gitlab) | ~> 3.18 |
 
 ## Providers
 
-No providers.
+| Name | Version |
+|------|---------|
+| <a name="provider_gitlab"></a> [gitlab](#provider\_gitlab) | ~> 3.18 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_gitlab_group_projects"></a> [gitlab\_group\_projects](#module\_gitlab\_group\_projects) | ./modules/gitlab_project | n/a |
 | <a name="module_gitlab_groups"></a> [gitlab\_groups](#module\_gitlab\_groups) | ./modules/gitlab_group | n/a |
-| <a name="module_gitlab_subgroup_projects"></a> [gitlab\_subgroup\_projects](#module\_gitlab\_subgroup\_projects) | ./modules/gitlab_project | n/a |
+| <a name="module_gitlab_projects"></a> [gitlab\_projects](#module\_gitlab\_projects) | ./modules/gitlab_project | n/a |
 
 ## Resources
 
-No resources.
+| Name | Type |
+|------|------|
+| [gitlab_group.main](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/group) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_defaults"></a> [defaults](#input\_defaults) | Defaults to be applied to all applicable resources. If a different setting is not specified for each resource, the defaults will be used. | `any` | n/a | yes |
+| <a name="input_defaults"></a> [defaults](#input\_defaults) | Defaults to be applied to all applicable resources. If a different setting is not specified for each resource, the value(s) here will be used. | `any` | n/a | yes |
 | <a name="input_groups"></a> [groups](#input\_groups) | A map of groups to create. | `map` | `{}` | no |
 | <a name="input_projects"></a> [projects](#input\_projects) | A map of projects to create. | `map` | `{}` | no |
 
 ## Outputs
 
-No outputs.
+| Name | Description |
+|------|-------------|
+| <a name="output_groups"></a> [groups](#output\_groups) | Object containing all groups created by this module. |
+| <a name="output_projects"></a> [projects](#output\_projects) | Object containing all projects created by this module. |
 <!-- END_TF_DOCS -->
