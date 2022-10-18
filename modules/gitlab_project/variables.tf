@@ -228,3 +228,27 @@ variable "squash_option" {
   description = "Squash commits when merge request. Valid values are never, always, default_on, or default_off."
   default     = "default_on"
 }
+
+variable "deploy_access_levels_development" {
+  description = "Map of group_ids and Gitlab roles that should be able to approve deployments."
+  # type = object({
+  #   group_ids    = list(number)
+  #   gitlab_roles = list(string)
+  # })
+}
+
+variable "deploy_access_levels_production" {
+  description = "Map of group_ids and Gitlab roles that should be able to approve deployments."
+  # type = object({
+  #   group_ids    = list(number)
+  #   gitlab_roles = list(string)
+  # })
+}
+
+variable "deploy_access_levels_staging" {
+  description = "Map of group_ids and Gitlab roles that should be able to approve deployments."
+  # type = object({
+  #   group_ids    = list(number)
+  #   gitlab_roles = list(string)
+  # })
+}
