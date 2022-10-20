@@ -49,3 +49,9 @@ variable "create_group_access_token" {
 variable "access_tokens" {
   type = map(any)
 }
+
+variable "saml_links" {
+  description = "A map of SAML group names and access levels to use for this Gitlab group."
+  type        = map(any)
+  default     = {}
+}
