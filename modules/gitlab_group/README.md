@@ -22,6 +22,7 @@ No modules.
 | [gitlab_group.group](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group) | resource |
 | [gitlab_group_access_token.gat](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_access_token) | resource |
 | [gitlab_group_access_token.gat_cicd](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_access_token) | resource |
+| [gitlab_group_saml_link.group](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_saml_link) | resource |
 | [gitlab_group_share_group.all](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_share_group) | resource |
 | [gitlab_group_variable.gat](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_variable) | resource |
 | [gitlab_group.parent_group](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/group) | data source |
@@ -38,6 +39,7 @@ No modules.
 | <a name="input_parent_group_name"></a> [parent\_group\_name](#input\_parent\_group\_name) | n/a | `any` | `null` | no |
 | <a name="input_path"></a> [path](#input\_path) | (Optional) the path to be used in the URL. Use if other than the group name is desired. | `string` | `null` | no |
 | <a name="input_request_access_enabled"></a> [request\_access\_enabled](#input\_request\_access\_enabled) | n/a | `bool` | `true` | no |
+| <a name="input_saml_links"></a> [saml\_links](#input\_saml\_links) | A map of SAML group names and access levels to use for this Gitlab group. | `map(any)` | `{}` | no |
 | <a name="input_share_groups"></a> [share\_groups](#input\_share\_groups) | Map of groups to grant access to this group for. | `any` | `{}` | no |
 | <a name="input_visibility_level"></a> [visibility\_level](#input\_visibility\_level) | n/a | `string` | `"private"` | no |
 
