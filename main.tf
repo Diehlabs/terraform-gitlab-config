@@ -157,7 +157,7 @@ module "gitlab_projects" {
   )
 
   teams_settings = {
-    webhook                      = try(each.value.teams_settings.webhook)
+    webhook                      = try(each.value.teams_settings.webhook, false)
     push_events                  = try(each.value.teams_settings.push_events, true)
     tag_push_events              = try(each.value.teams_settings.tag_push_events, true)
     notify_only_broken_pipelines = try(each.value.teams_settings.notify_only_broken_pipelines, true)
