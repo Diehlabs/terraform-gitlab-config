@@ -252,3 +252,7 @@ variable "deploy_access_levels_staging" {
   #   gitlab_roles = list(string)
   # })
 }
+
+variable "teams_settings" {
+  description = "MS Teams integration settings."
+}
