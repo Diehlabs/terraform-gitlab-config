@@ -3,6 +3,7 @@
 # https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_environment
 # -----------------------------------------------------------------------------
 resource "gitlab_project_environment" "development" {
+  count               = var.create_deployment_environments ? 1 : 0
   project             = local.project.id
   name                = "development"
   stop_before_destroy = true
@@ -10,6 +11,7 @@ resource "gitlab_project_environment" "development" {
 }
 
 resource "gitlab_project_environment" "staging" {
+  count               = var.create_deployment_environments ? 1 : 0
   project             = local.project.id
   name                = "staging"
   stop_before_destroy = true
@@ -17,6 +19,7 @@ resource "gitlab_project_environment" "staging" {
 }
 
 resource "gitlab_project_environment" "production" {
+  count               = var.create_deployment_environments ? 1 : 0
   project             = local.project.id
   name                = "production"
   stop_before_destroy = true
@@ -28,9 +31,10 @@ resource "gitlab_project_environment" "production" {
 # https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_protected_environment
 # -----------------------------------------------------------------------------
 resource "gitlab_project_protected_environment" "development" {
+  count                   = var.create_deployment_environments ? 1 : 0
   project                 = local.project.id
   required_approval_count = local.deploy_access_levels_development.required_approval_count
-  environment             = gitlab_project_environment.development.name
+  environment             = gitlab_project_environment.development[0].name
 
   dynamic "deploy_access_levels" {
     for_each = local.deploy_access_levels_development.group_ids
@@ -48,9 +52,10 @@ resource "gitlab_project_protected_environment" "development" {
 }
 
 resource "gitlab_project_protected_environment" "staging" {
+  count                   = var.create_deployment_environments ? 1 : 0
   project                 = local.project.id
   required_approval_count = local.deploy_access_levels_staging.required_approval_count
-  environment             = gitlab_project_environment.staging.name
+  environment             = gitlab_project_environment.staging[0].name
 
   dynamic "deploy_access_levels" {
     for_each = local.deploy_access_levels_staging.group_ids
@@ -68,9 +73,10 @@ resource "gitlab_project_protected_environment" "staging" {
 }
 
 resource "gitlab_project_protected_environment" "production" {
+  count                   = var.create_deployment_environments ? 1 : 0
   project                 = local.project.id
   required_approval_count = local.deploy_access_levels_production.required_approval_count
-  environment             = gitlab_project_environment.production.name
+  environment             = gitlab_project_environment.production[0].name
 
   dynamic "deploy_access_levels" {
     for_each = local.deploy_access_levels_production.group_ids

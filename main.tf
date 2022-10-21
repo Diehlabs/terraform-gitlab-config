@@ -139,6 +139,7 @@ module "gitlab_projects" {
   deploy_access_levels_development      = try(each.value.deployments.access_levels.development, var.defaults.deployments.access_levels.development, local.deployments_default.development)
   deploy_access_levels_staging          = try(each.value.deployments.access_levels.staging, var.defaults.deployments.access_levels.staging, local.deployments_default.staging)
   deploy_access_levels_production       = try(each.value.deployments.access_levels.production, var.defaults.deployments.access_levels.production, local.deployments_default.production)
+
   merge_request_approval_settings = merge(
     local.merge_request_approval_settings_default,
     try(var.defaults.project.merge_request_approval_settings_default, {}),
