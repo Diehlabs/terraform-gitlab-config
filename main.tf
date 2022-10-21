@@ -156,5 +156,15 @@ module "gitlab_projects" {
     try(each.value.project.push_rules, {})
   )
 
+  teams_settings = {
+    webhook                      = try(each.value.teams_settings.webhook)
+    push_events                  = try(each.value.teams_settings.push_events, true)
+    tag_push_events              = try(each.value.teams_settings.tag_push_events, true)
+    notify_only_broken_pipelines = try(each.value.teams_settings.notify_only_broken_pipelines, true)
+    merge_requests_events        = try(each.value.teams_settings.merge_requests_events, true)
+    wiki_page_events             = try(each.value.teams_settings.wiki_page_events, false)
+    branches_to_be_notified      = try(each.value.teams_settings.branches_to_be_notified, "protected")
+  }
+
   depends_on = [module.gitlab_groups]
 }

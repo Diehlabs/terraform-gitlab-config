@@ -44,6 +44,7 @@ No modules.
 | [gitlab_project_variable.gitlab_deploy_token](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_variable) | resource |
 | [gitlab_project_variable.gitlab_deploy_token_user](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_variable) | resource |
 | [gitlab_service_external_wiki.wiki](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/service_external_wiki) | resource |
+| [gitlab_service_microsoft_teams.teams](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/service_microsoft_teams) | resource |
 | [gitlab_project.template_project](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/project) | data source |
 
 ## Inputs
@@ -88,6 +89,7 @@ No modules.
 | <a name="input_share_groups"></a> [share\_groups](#input\_share\_groups) | Map of groups to grant access to this project for. | `any` | `{}` | no |
 | <a name="input_shared_runners_enabled"></a> [shared\_runners\_enabled](#input\_shared\_runners\_enabled) | Allow pipelines to run on shared runners | `bool` | `true` | no |
 | <a name="input_squash_option"></a> [squash\_option](#input\_squash\_option) | Squash commits when merge request. Valid values are never, always, default\_on, or default\_off. | `string` | `"default_on"` | no |
+| <a name="input_teams_settings"></a> [teams\_settings](#input\_teams\_settings) | MS Teams integration settings. | `any` | n/a | yes |
 | <a name="input_template_project_path"></a> [template\_project\_path](#input\_template\_project\_path) | The full path of the project to use as a template for this project | `any` | `null` | no |
 | <a name="input_visibility_level"></a> [visibility\_level](#input\_visibility\_level) | n/a | `string` | `"private"` | no |
 | <a name="input_wiki_enabled"></a> [wiki\_enabled](#input\_wiki\_enabled) | n/a | `bool` | `false` | no |
