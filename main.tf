@@ -51,9 +51,7 @@ locals {
   }
 
   # Grant developer rights to the devops group for every project.
-  share_groups_default = {
-    "verituity/devops" = "developer"
-  }
+
 
   # defaults for group access tokens created and stored as GA_CICD_TOKEN
   gitlab_group_access_token_scopes_default = ["read_api", "read_repository"]
@@ -68,12 +66,12 @@ data "gitlab_group" "main" {
 # Create all Gitlab groups first.
 # -----------------------------------------------------------------------------
 module "gitlab_groups" {
-  source      = "./modules/gitlab_group"
-  for_each    = var.groups
-  name        = each.value.name
-  description = try(each.value.description, "")
-  path        = try(each.value.path, null)
-  # share_groups      = try(each.value.share_groups, {})
+  source                    = "./modules/gitlab_group"
+  for_each                  = var.groups
+  name                      = each.value.name
+  description               = try(each.value.description, "")
+  path                      = try(each.value.path, null)
+  share_groups              = try(each.value.share_groups, {})
   parent_group_name         = try(each.value.parent_group_name, var.defaults.group_path)
   access_tokens             = try(each.value.access_tokens, {})
   create_group_access_token = try(each.value.create_group_access_token, false)
