@@ -17,7 +17,6 @@ resource "gitlab_project" "empty" {
   default_branch                        = var.default_branch
   merge_method                          = var.merge_method
   shared_runners_enabled                = var.shared_runners_enabled
-  only_allow_merge_if_pipeline_succeeds = local.only_allow_merge_if_pipeline_succeeds
   remove_source_branch_after_merge      = var.remove_source_branch_after_merge
   initialize_with_readme                = var.init_with_readme
   pipelines_enabled                     = var.pipelines_enabled
@@ -33,6 +32,7 @@ resource "gitlab_project" "empty" {
   container_registry_access_level       = var.container_registry_enabled ? "private" : "disabled"
   public_builds                         = var.public_builds
   squash_option                         = var.squash_option
+  only_allow_merge_if_pipeline_succeeds = var.only_allow_merge_if_pipeline_succeeds
   push_rules {
     branch_name_regex      = lookup(var.push_rules, "branch_name_regex", "")
     commit_message_regex   = lookup(var.push_rules, "commit_message_regex", "")
@@ -61,7 +61,6 @@ resource "gitlab_project" "from_template" {
   default_branch                        = var.default_branch
   merge_method                          = var.merge_method
   shared_runners_enabled                = var.shared_runners_enabled
-  only_allow_merge_if_pipeline_succeeds = local.only_allow_merge_if_pipeline_succeeds
   remove_source_branch_after_merge      = var.remove_source_branch_after_merge
   initialize_with_readme                = var.init_with_readme
   pipelines_enabled                     = var.pipelines_enabled
@@ -76,6 +75,7 @@ resource "gitlab_project" "from_template" {
   container_registry_enabled            = var.container_registry_enabled
   container_registry_access_level       = var.container_registry_enabled ? "private" : "disabled"
   public_builds                         = var.public_builds
+  only_allow_merge_if_pipeline_succeeds = var.only_allow_merge_if_pipeline_succeeds
   push_rules {
     branch_name_regex      = lookup(var.push_rules, "branch_name_regex", "")
     commit_message_regex   = lookup(var.push_rules, "commit_message_regex", "")

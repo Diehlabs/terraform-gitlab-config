@@ -6,11 +6,6 @@ locals {
   # )
   project = gitlab_project.empty[0]
 
-  only_allow_merge_if_pipeline_succeeds = anytrue([
-    var.only_allow_merge_if_pipeline_succeeds,
-    var.merge_pipelines_enabled
-  ])
-
   project_name_sanitzed = lower(replace("${local.project.name}", " ", "-"))
 
   deploy_access_levels_development = try(var.deploy_access_levels_development, null)
