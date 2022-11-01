@@ -123,20 +123,26 @@ module "gitlab_projects" {
   pipelines_enabled                  = try(each.value.pipelines_enabled, var.defaults.project.pipelines_enabled, true)
   # Enable merge pipelines if specifically enabled, if pipelines are enabled, or default to disabled.
   # Enabling this will cause merge requests to hang forever waiting for pipeline status if there is no pipeline to run.
-  merge_pipelines_enabled               = try(each.value.merge_pipelines_enabled, var.defaults.project.merge_pipelines_enabled, true)
-  only_allow_merge_if_pipeline_succeeds = try(each.value.only_allow_merge_if_pipeline_succeeds, var.defaults.project.only_allow_merge_if_pipeline_succeeds, null)
-  merge_trains_enabled                  = try(each.value.merge_trains_enabled, var.defaults.project.merge_trains_enabled, false)
-  project_variables                     = try(each.value.project_variables, {})
-  lfs_enabled                           = try(each.value.lfs_enabled, false)
-  issues_enabled                        = try(each.value.issues_enabled, false)
-  remove_source_branch_after_merge      = try(each.value.remove_source_branch_after_merge, var.defaults.project.remove_source_branch_after_merge, true)
-  shared_runners_enabled                = try(each.value.shared_runners_enabled, true)
-  create_deploy_token                   = try(each.value.create_deploy_token, var.defaults.project.create_deploy_token, false)
-  deploy_token_scopes                   = try(each.value.deploy_token_scopes, ["read_repository", "read_registry", "read_package_registry"])
-  squash_option                         = try(each.value.squash_option, var.defaults.project.squash_option, "default_on")
-  deploy_access_levels_development      = try(each.value.deployments.access_levels.development, var.defaults.deployments.access_levels.development, local.deployments_default.development)
-  deploy_access_levels_staging          = try(each.value.deployments.access_levels.staging, var.defaults.deployments.access_levels.staging, local.deployments_default.staging)
-  deploy_access_levels_production       = try(each.value.deployments.access_levels.production, var.defaults.deployments.access_levels.production, local.deployments_default.production)
+  merge_pipelines_enabled = try(each.value.merge_pipelines_enabled, var.defaults.project.merge_pipelines_enabled, true)
+  only_allow_merge_if_pipeline_succeeds = try(
+    each.value.only_allow_merge_if_pipeline_succeeds,
+    var.defaults.project.only_allow_merge_if_pipeline_succeeds,
+    each.value.merge_pipelines_enabled,
+    var.defaults.project.merge_pipelines_enabled,
+    false
+  )
+  merge_trains_enabled             = try(each.value.merge_trains_enabled, var.defaults.project.merge_trains_enabled, false)
+  project_variables                = try(each.value.project_variables, {})
+  lfs_enabled                      = try(each.value.lfs_enabled, false)
+  issues_enabled                   = try(each.value.issues_enabled, false)
+  remove_source_branch_after_merge = try(each.value.remove_source_branch_after_merge, var.defaults.project.remove_source_branch_after_merge, true)
+  shared_runners_enabled           = try(each.value.shared_runners_enabled, true)
+  create_deploy_token              = try(each.value.create_deploy_token, var.defaults.project.create_deploy_token, false)
+  deploy_token_scopes              = try(each.value.deploy_token_scopes, ["read_repository", "read_registry", "read_package_registry"])
+  squash_option                    = try(each.value.squash_option, var.defaults.project.squash_option, "default_on")
+  deploy_access_levels_development = try(each.value.deployments.access_levels.development, var.defaults.deployments.access_levels.development, local.deployments_default.development)
+  deploy_access_levels_staging     = try(each.value.deployments.access_levels.staging, var.defaults.deployments.access_levels.staging, local.deployments_default.staging)
+  deploy_access_levels_production  = try(each.value.deployments.access_levels.production, var.defaults.deployments.access_levels.production, local.deployments_default.production)
 
   merge_request_approval_settings = merge(
     local.merge_request_approval_settings_default,
