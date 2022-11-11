@@ -24,6 +24,7 @@ No modules.
 | [gitlab_group_access_token.gat_cicd](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_access_token) | resource |
 | [gitlab_group_saml_link.group](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_saml_link) | resource |
 | [gitlab_group_share_group.all](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_share_group) | resource |
+| [gitlab_group_variable.all](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_variable) | resource |
 | [gitlab_group_variable.gat](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_variable) | resource |
 | [gitlab_group.parent_group](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/group) | data source |
 | [gitlab_group.share](https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/group) | data source |
@@ -35,6 +36,7 @@ No modules.
 | <a name="input_access_tokens"></a> [access\_tokens](#input\_access\_tokens) | n/a | `map(any)` | n/a | yes |
 | <a name="input_create_group_access_token"></a> [create\_group\_access\_token](#input\_create\_group\_access\_token) | If set to true will create a GAT and add it as a CICD variable named GA\_TOKEN on the managed group. This would be used with CICD. | `bool` | `false` | no |
 | <a name="input_description"></a> [description](#input\_description) | n/a | `any` | n/a | yes |
+| <a name="input_group_variables"></a> [group\_variables](#input\_group\_variables) | A map of variables to create for this project. Ex:<br>my\_var\_1 = {<br>  value = string * required<br>  protected bool *optional, false<br>  masked *optional, true<br>  environment\_scope *optional, "*"<br>} | `map` | `{}` | no |
 | <a name="input_name"></a> [name](#input\_name) | n/a | `any` | n/a | yes |
 | <a name="input_parent_group_name"></a> [parent\_group\_name](#input\_parent\_group\_name) | n/a | `any` | `null` | no |
 | <a name="input_path"></a> [path](#input\_path) | (Optional) the path to be used in the URL. Use if other than the group name is desired. | `string` | `null` | no |

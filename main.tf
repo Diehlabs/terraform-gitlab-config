@@ -76,6 +76,7 @@ module "gitlab_groups" {
   access_tokens             = try(each.value.access_tokens, {})
   create_group_access_token = try(each.value.create_group_access_token, false)
   saml_links                = try(each.value.saml_links, var.defaults.groups.saml_links, {})
+  group_variables           = try(each.value.group_variables, {})
   # gitlab_group_access_token_scopes = try(
   #   each.value.gitlab_group_access_token_scopes,
   #   local.gitlab_group_access_token_scopes_default,

@@ -66,14 +66,16 @@ variable "template_project_path" {
 }
 
 variable "project_variables" {
-  default = {}
-  /*
-  name = {
-    value = string * required
-    protected bool *optional, false
-    masked *optional, true
-    environment_scope *optional, "*"
-*/
+  default     = {}
+  description = <<EOT
+A map of variables to create for this project. Ex:
+my_var_1 = {
+  value = string * required
+  protected bool *optional, false
+  masked *optional, true
+  environment_scope *optional, "*"
+}
+EOT
 }
 
 variable "init_with_readme" {
