@@ -2,7 +2,7 @@ terraform {
   required_providers {
     gitlab = {
       source  = "gitlabhq/gitlab"
-      version = "~> 3.16"
+      version = "~> 3.18"
     }
     time = {
       source  = "hashicorp/time"
