@@ -81,7 +81,7 @@ No modules.
 | <a name="input_path"></a> [path](#input\_path) | Short path for the project. Usually the same as the name but without spaces. | `any` | n/a | yes |
 | <a name="input_pipeline_schedules"></a> [pipeline\_schedules](#input\_pipeline\_schedules) | Object defining one or more schedules to configure for the project pipeline | `map` | `{}` | no |
 | <a name="input_pipelines_enabled"></a> [pipelines\_enabled](#input\_pipelines\_enabled) | Pipelines enabled on this project | `bool` | `true` | no |
-| <a name="input_project_variables"></a> [project\_variables](#input\_project\_variables) | n/a | `map` | `{}` | no |
+| <a name="input_project_variables"></a> [project\_variables](#input\_project\_variables) | A map of variables to create for this project. Ex:<br>my\_var\_1 = {<br>  value = string * required<br>  protected bool *optional, false<br>  masked *optional, true<br>  environment\_scope *optional, "*"<br>} | `map` | `{}` | no |
 | <a name="input_public_builds"></a> [public\_builds](#input\_public\_builds) | If true, jobs can be viewed by non-project members. | `bool` | `false` | no |
 | <a name="input_push_rules"></a> [push\_rules](#input\_push\_rules) | n/a | `map` | `{}` | no |
 | <a name="input_remove_source_branch_after_merge"></a> [remove\_source\_branch\_after\_merge](#input\_remove\_source\_branch\_after\_merge) | Remove the source branch after completed merge | `bool` | `true` | no |
