@@ -3,7 +3,7 @@
 # -----------------------------------------------------------------------------
 # share_groups = {
 #   share_001 = {
-#     group_path = "verituity/devops"
+#     group_path = "diehlabs/devops"
 #     group_access  = "maintainer"
 #   }
 # }

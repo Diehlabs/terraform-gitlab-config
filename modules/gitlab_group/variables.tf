@@ -25,7 +25,7 @@ variable "share_groups" {
   type        = any
   description = "Map of groups to grant access to this group for."
   # share_groups = {
-  #   "verituity/devops" = "maintainer"
+  #   "diehlabs/devops" = "maintainer"
   #   # full_path = group_access
   # }
 }

@@ -1,7 +1,7 @@
 locals {
   defaults = {
     # group_path will be used as the namespace for all groups and Terratest unless one is specified a given resource.
-    group_path = "verituity/gitlab-management/gitlab-terratest-sandbox"
+    group_path = "diehlabs/gitlab-management/gitlab-terratest-sandbox"
 
     # push_rules will be used for all Terratest unless one is specified for a given Terratestect.
     project = {

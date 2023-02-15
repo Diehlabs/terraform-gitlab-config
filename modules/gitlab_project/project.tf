@@ -37,7 +37,7 @@ resource "gitlab_project" "empty" {
     branch_name_regex      = lookup(var.push_rules, "branch_name_regex", "")
     commit_message_regex   = lookup(var.push_rules, "commit_message_regex", "")
     member_check           = lookup(var.push_rules, "member_check", false)
-    author_email_regex     = lookup(var.push_rules, "author_email_regex", "verituity\\.com$")
+    author_email_regex     = lookup(var.push_rules, "author_email_regex", "diehlabs\\.com$")
     commit_committer_check = lookup(var.push_rules, "commit_committer_check", true)
   }
 }
@@ -80,7 +80,7 @@ resource "gitlab_project" "from_template" {
     branch_name_regex      = lookup(var.push_rules, "branch_name_regex", "")
     commit_message_regex   = lookup(var.push_rules, "commit_message_regex", "")
     member_check           = lookup(var.push_rules, "member_check", false)
-    author_email_regex     = lookup(var.push_rules, "author_email_regex", "verituity\\.com$")
+    author_email_regex     = lookup(var.push_rules, "author_email_regex", "diehlabs\\.com$")
     commit_committer_check = lookup(var.push_rules, "commit_committer_check", true)
   }
 }

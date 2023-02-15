@@ -8,6 +8,6 @@ module "gitlab_project" {
   source            = "<ssh or https url to module repo>"
   name              = "microservice-golang-xyz"
   description       = "Repository for the xyz Golang microservice"
-  parent_group_name = "verituity/development"
+  parent_group_name = "diehlabs/development"
 }
 ```

@@ -7,3 +7,8 @@ terraform.auto.tfvars
 .dccache
 .terraform.lock.hcl
 temp
+*.tfvars
+.terraform.lock.hcl
+*.key
+.DS_Store
+.terraform

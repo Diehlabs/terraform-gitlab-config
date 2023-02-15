@@ -1,5 +1,5 @@
 # Terraform module for a Gitlab project
-This Terraform module creates a Gitlab project for use at Verituity.
+This Terraform module creates a Gitlab project for use at diehlabs.
 
 ## Examples
 * [Basic](docs/examples/basic.md)

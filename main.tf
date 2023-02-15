@@ -28,7 +28,7 @@ locals {
 
   # these defaults will be applied or overridden based on first defaults and then project specifics passed in
   push_rules_default = {
-    author_email_regex     = "@verituity\\.com$"
+    author_email_regex     = "@diehlabs\\.com$"
     commit_committer_check = false
     member_check           = false
     prevent_secrets        = false
@@ -36,7 +36,7 @@ locals {
   }
 
   approval_rule_default = {
-    name               = "Verituity Default"
+    name               = "diehlabs Default"
     approvals_required = 1
     user_ids           = []
     group_ids          = []

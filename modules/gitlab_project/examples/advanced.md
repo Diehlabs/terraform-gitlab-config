@@ -15,7 +15,7 @@ module "gitlab_project" {
   # required parameters
   name                       = "microservice-golang-xyz"
   description                = "Repository for the xyz Golang microservice"
-  parent_group_name          = "verituity/development"
+  parent_group_name          = "diehlabs/development"
   # optional parameters
   default_branch             = local.default_branch_name
   merge_method               = "merge"
@@ -27,19 +27,19 @@ module "gitlab_project" {
   request_access_enabled     = false
   container_registry_enabled = false
   disable_overriding_approvers_per_merge_request = true
-  external_wiki_url          = "https://verituity.atlassian.net/wiki/spaces/REGISTRY/pages/
+  external_wiki_url          = "https://diehlabs.atlassian.net/wiki/spaces/REGISTRY/pages/
   1683619841/Developer+and+Engineer+Onboarding+Guide"
   environments = {
     prod = "https://www.google.com"
     qa = "https://www.yahoo.com"
-    dev = "https://www.verituity.com"
+    dev = "https://www.diehlabs.com"
   }
 
   push_rules = {
     branch_name_regex      = ""
     commit_message_regex   = ""
     member_check           = false
-    author_email_regex     = "verituity\\.com$"
+    author_email_regex     = "diehlabs\\.com$"
     commit_committer_check = true
   }
 

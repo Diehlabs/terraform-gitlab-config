@@ -96,7 +96,7 @@ data "gitlab_project" "template_project" {
 #   file_path      = ".gitlab-ci.yml"
 #   branch         = var.default_branch
 #   content        = "# This repository is managed by Terraform."
-#   author_email   = "chris.diehl@verituity.com"
+#   author_email   = "chris.diehl@diehlabs.com"
 #   author_name    = "Terraform"
 #   commit_message = "VSCO-0000 create repository"
 #   lifecycle {

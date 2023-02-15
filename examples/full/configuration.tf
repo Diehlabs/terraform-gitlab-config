@@ -1,7 +1,7 @@
 locals {
   defaults = {
     # group_path will be used as the namespace for all groups and Terratest unless one is specified a given resource.
-    group_path = "verituity/gitlab-management/gitlab-terratest-sandbox"
+    group_path = "diehlabs/gitlab-management/gitlab-terratest-sandbox"
 
     # push_rules will be used for all Terratest unless one is specified for a given Terratestect.
     project = {
@@ -61,7 +61,7 @@ locals {
     request_access_enabled                         = false
     container_registry_enabled                     = false
     disable_overriding_approvers_per_merge_request = true
-    external_wiki_url                              = "https://verituity.atlassian.net/wiki/spaces/REGISTRY/pages/1683619841/Developer+and+Engineer+Onboarding+Guide"
+    external_wiki_url                              = "https://diehlabs.atlassian.net/wiki/spaces/REGISTRY/pages/1683619841/Developer+and+Engineer+Onboarding+Guide"
     branch_name_regex                              = "^(prov04mainbranch|feature|hotfix|bugfix|release)\\/"
     create_deploy_token                            = true
     deploy_token_scopes                            = ["read_repository"]
@@ -77,7 +77,7 @@ locals {
       }
       env_03 = {
         name         = "dev"
-        external_url = "https://www.verituity.com"
+        external_url = "https://www.diehlabs.com"
       }
     }
     push_rules = {

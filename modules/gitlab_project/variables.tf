@@ -35,7 +35,7 @@ variable "share_groups" {
   type        = any
   description = "Map of groups to grant access to this project for."
   # {
-  #   "verituity/devops" = "maintainer"
+  #   "diehlabs/devops" = "maintainer"
   #   * full_path = group_access
   # }
 }

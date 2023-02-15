@@ -1,6 +1,6 @@
 Top level module that handles group and project creation inside a single Gitlab group.
 
-All groups, including the top level "verituity" group should use this module to manage all resources inside the group.
+All groups, including the top level "diehlabs" group should use this module to manage all resources inside the group.
 
 
 1. Create all groups

@@ -9,7 +9,7 @@ stages:
   - test
   - release
 
-image: registry.gitlab.com/verituity/devops/docker-images/go-build/terraform:v1.3.630343137
+image: registry.gitlab.com/diehlabs/devops/docker-images/go-build/terraform:v1.3.630343137
 
 variables:
   # these vars are used to complete the partial terraform http backend configuration, if there is one defined in the root module
@@ -26,7 +26,7 @@ variables:
   TF_MODULE_VERSION: 'v0.4.9'
 
 include:
-  - project: 'verituity/devops/cicd-templates'
+  - project: 'diehlabs/devops/cicd-templates'
     file:
       - /infra/terraform_jobs.yml
       - /util/git-tag.yml
