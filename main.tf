@@ -52,10 +52,6 @@ locals {
 
   # Grant developer rights to the devops group for every project.
 
-
-  # defaults for group access tokens created and stored as GA_CICD_TOKEN
-  gitlab_group_access_token_scopes_default = ["read_api", "read_repository"]
-
 }
 
 data "gitlab_group" "main" {
@@ -77,10 +73,6 @@ module "gitlab_groups" {
   create_group_access_token = try(each.value.create_group_access_token, false)
   saml_links                = try(each.value.saml_links, var.defaults.groups.saml_links, {})
   group_variables           = try(each.value.group_variables, {})
-  # gitlab_group_access_token_scopes = try(
-  #   each.value.gitlab_group_access_token_scopes,
-  #   local.gitlab_group_access_token_scopes_default,
-  # )
 }
 
 # -----------------------------------------------------------------------------
